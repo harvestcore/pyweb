@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<html>
+	<head>
+		<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='styles.css') }}" />
+		<link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icon.png') }}">
+		<title>{% block title %}{% endblock %}</title>
+	</head>
+
+	<body>
+        <div class="cabecera">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="logo" />
+            <h1>¯\_(ツ)_/¯</h1>
+        </div>
+
+		<div class="sidenav">
+			<a href="{{ url_for('login') }}">Login</a>
+			<br>
+			<a href="{{ url_for('inicio') }}">Inicio</a>
+			<a href="{{ url_for('ipcontainer') }}">IPContainer</a>
+			<a href="{{ url_for('repositorios') }}">Repositorios</a>
+			<a href="{{ url_for('proyectos') }}">Proyectos</a>
+			<a href="{{ url_for('contacto') }}">Contacto</a>
+			<a href="https://github.com/harvestcore" target="_blank">GitHub</a>
+			<br><br><br>
+			<h3 align="center">Historial:</h3>
+		</div>
+
+		<div class="content">
+			{% block content %}
+			{% endblock %}
+		</div>
+
+		<div class="footer">
+			Created by <a href="https://github.com/harvestcore" target="_blank">Ángel Gómez</a> ~ <a href="{{ url_for('static', filename='LICENSE.txt') }}" target="_blank">LICENSE</a>
+		</div>
+	</body>
+</html>
