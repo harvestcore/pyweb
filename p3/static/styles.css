@@ -20,15 +20,17 @@ body {
 ****************************************/
  /* The sidebar menu */
  .sidenav {
-    height: 100%; /* Full-height: remove this if you want "auto" height */
-    width: 110px; /* Set the width of the sidebar */
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-    z-index: 1; /* Stay on top */
-    top: 0; /* Stay at the top */
-    left: 0;
+    height: 100%;
+    width: auto;
+    position: fixed;
+    z-index: 1;
+    top: 15px;
+    left: 15px;
+    bottom: 15px;
     background-color: #aaaaaa50;
-    overflow-x: hidden; /* Disable horizontal scroll */
+    overflow-x: hidden;
     padding-top: 20px;
+    border-radius: 5px;
   }
   
   /* The navigation menu links */
@@ -42,7 +44,7 @@ body {
   
   /* When you mouse over the navigation links, change their color */
   .sidenav a:hover {
-    color: #f1f1f1;
+    color: #969696;
   }
   
   /* Style page content */
@@ -55,6 +57,19 @@ body {
   @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 15px;}
+  }
+
+  .sidenav h3 {
+    padding: 6px 8px 6px 16px;
+    color: #e2e2e2;
+  }
+
+  .sidenav li {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 13px;
+    color: #e2e2e2;
+    display: block;
   }
 
 
@@ -176,13 +191,12 @@ a:active {
             FOOTER
 ****************************************/
 .footer {
-    position: absolute;
-    left: 0;
-    bottom: 0;
+    position: fixed;
     width: 100%;
+    bottom: 0;
     padding-top: 2px;
     height: 15px;
-    background-color: rgba(255, 0, 0, 0.5);
+    background-color: #aaaaaa50;
     color: white;
     text-align: center;
 }
@@ -211,11 +225,53 @@ a:active {
     color: white;
 }
 
+
+/****************************************
+            Cabecera
+****************************************/
 .cabecera {
-    right: 0;
-    top: 0;
     width: 100%;
-    text-align: center;
+    height: 60px;
+    background: white;
+    position: absolute;
+    top: 10px;
+    z-index: 10;
     align-content: center;
-    background-size: contain;
+}
+
+#logo {
+    position: relative;
+    transform: scale(0.2, 0.2);
+}
+
+/****************************************
+            Cabecera
+****************************************/
+#profile {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: auto;
+    font-size: 13px;
+    text-align: center;
+}
+
+#profile td, #profile th {
+    padding: 8px;
+    border-radius: 7px;
+}
+
+#profile tr:hover {
+    background-color: rgb(165, 165, 165);
+}
+
+#profile tr {
+    background-color: rgb(221, 221, 221);
+}
+
+#profile th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
 }

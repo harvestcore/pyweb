@@ -9,22 +9,30 @@
 	</head>
 
 	<body>
-        <div class="cabecera">
-            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="logo" />
-            <h1>¯\_(ツ)_/¯</h1>
-        </div>
 
 		<div class="sidenav">
-			<a href="{{ url_for('login') }}">Login</a>
-			<br>
 			<a href="{{ url_for('inicio') }}">Inicio</a>
 			<a href="{{ url_for('ipcontainer') }}">IPContainer</a>
 			<a href="{{ url_for('repositorios') }}">Repositorios</a>
 			<a href="{{ url_for('proyectos') }}">Proyectos</a>
 			<a href="{{ url_for('contacto') }}">Contacto</a>
-			<a href="https://github.com/harvestcore" target="_blank">GitHub</a>
-			<br><br><br>
-			<h3 align="center">Historial:</h3>
+            <a href="https://github.com/harvestcore" target="_blank">GitHub</a>
+            <br><br>
+            <a href="{{ url_for('signup') }}">Sign up</a>
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+            <br>
+            <a href="{{ url_for('profile') }}">Perfil</a>
+            <a href="{{ url_for('modifyprofile') }}">Panel de control</a
+            <br><br>
+            <h3>User: {% if 'username' in session -%} {{ session.username }} {% else -%} None {%- endif %}</h3>
+            <br><br>
+            <h3>Historial:</h3>
+            {% for i in range(0,3) -%}
+                {% if session['history'][i] != "" -%}
+                    <a href="{{ url_for(session.history[i]) }}">{{ session.history[i] }}</a>
+                {%- endif %}
+            {%- endfor %}
 		</div>
 
 		<div class="content">
