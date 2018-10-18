@@ -9,6 +9,12 @@
 	</head>
 
 	<body>
+        <header>
+            <img src="{{ url_for('static', filename='images/logo2.png') }}" class="logo">
+            <div class="cabecera">
+                <!--<h1 align="center">¯\_(ツ)_/¯</h1>-->
+            </div>
+        </header>
 
 		<div class="sidenav">
 			<a href="{{ url_for('inicio') }}">Inicio</a>
@@ -35,7 +41,7 @@
             {%- endfor %}
 		</div>
 
-		<div class="content">
+		<div class="contenido_pag">
 			{% block content %}
 			{% endblock %}
 		</div>
