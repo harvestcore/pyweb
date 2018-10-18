@@ -3,8 +3,9 @@
 {% block title %}Panel de control{% endblock %}
 {% block content %}
 <br>
+<h2 align="center">Modifica tus datos:</h2>
+<br>
 <form method="POST" align="center">
-    <h2>Modifica tus datos:</h2>
     <input type="text" name="username" placeholder="Username" value="{{ session['data']['username'] }}" required><br><br>
     <input type="password" name="password" placeholder="Password" value="{{ session['data']['password'] }}" required><br><br>
     <input type="text" name="firstname" placeholder="First name" value="{{ session['data']['firstname'] }}" required><br><br>
