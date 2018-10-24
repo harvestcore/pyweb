@@ -67,9 +67,10 @@ def login_post():
 
 @app.route('/logout')
 def logout():
-    if session.get('username') and session['loggedIn']:
-        session.pop('username')
-        session['loggedIn'] = False
+    if session.get('username') and session.get('loggedIn'):
+        if session['loggedIn']:
+            session.pop('username')
+            session['loggedIn'] = False
     addToHistory("logout")
     return redirect(url_for('inicio'))
 
@@ -87,15 +88,17 @@ def signup_post():
 
 @app.route('/profile')
 def profile():
-    if session['loggedIn']:
-        return render_template('profile.html')
+    if session.get('loggedIn'):
+        if session['loggedIn']:
+            return render_template('profile.html')
     else:
         return redirect(url_for('inicio'))
 
 @app.route('/modifyprofile')
 def modifyprofile():
-    if session['loggedIn']:
-        return render_template('modifyprofile.html')
+    if session.get('loggedIn'):
+        if session['loggedIn']:
+            return render_template('modifyprofile.html')
     else:
         return redirect(url_for('inicio'))
 
