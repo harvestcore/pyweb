@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<html>
+	<head>
+		<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='styles.css') }}" />
+        <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icon.png') }}">
+        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+        <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+		<title>{% block title %}{% endblock %}</title>
+	</head>
+
+	<body>
+        <header>
+            <img src="{{ url_for('static', filename='images/logo2.png') }}" class="logo">
+            <div class="cabecera">
+                <!--<h1 align="center">¯\_(ツ)_/¯</h1>-->
+            </div>
+        </header>
+
+		<div class="sidenav">
+			<a href="{{ url_for('inicio') }}">Inicio</a>
+			<a href="{{ url_for('ipcontainer') }}">IPContainer</a>
+			<a href="{{ url_for('repositorios') }}">Repositorios</a>
+			<a href="{{ url_for('proyectos') }}">Proyectos</a>
+			<a href="{{ url_for('contacto') }}">Contacto</a>
+            <a href="https://github.com/harvestcore" target="_blank">GitHub</a>
+            <br><br>
+            <a href="{{ url_for('signup') }}">Sign up</a>
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+            <br>
+            <a href="{{ url_for('profile') }}">Perfil</a>
+            <a href="{{ url_for('modifyprofile') }}">Panel de control</a>
+            <a href="{{ url_for('restaurantes') }}">Restaurantes</a>
+            <br>
+            <h3>User: {% if 'username' in session -%} {{ session.username }} {% else -%} None {%- endif %}</h3>
+            <br>
+            <h3>Historial:</h3>
+            {% for i in range(0,3) -%}
+                {% if session['history'][i] != "" -%}
+                    <a href="{{ url_for(session.history[i]) }}">{{ session.history[i] }}</a>
+                {%- endif %}
+            {%- endfor %}
+		</div>
+
+		<div class="contenido_pag">
+			{% block content %}
+			{% endblock %}
+		</div>
+
+		<div class="footer">
+			Created by <a href="https://github.com/harvestcore" target="_blank">Ángel Gómez</a> ~ <a href="{{ url_for('static', filename='LICENSE.txt') }}" target="_blank">LICENSE</a>
+		</div>
+	</body>
+</html>
