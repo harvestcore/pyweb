@@ -119,8 +119,15 @@ def modifyprofile_post():
 @app.route('/restaurantes')
 def restaurantes():
     data = dbmongo.getAll()
-    session['restsize'] = data.count()
-    session['restaurantes'] = data
+    datalist = []
+    # session['restsize'] = data.count()
+    num = 500
+    session['restsize'] = num
+
+    for i in range(num):
+        datalist.append({'_id':str(data[i]['_id']), 'location':data[i]['location'], 'name':data[i]['name']})
+
+    session['restaurantes'] = datalist
     return render_template('restaurantes.html')
 
 @app.errorhandler(404)
