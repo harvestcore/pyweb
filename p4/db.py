@@ -29,7 +29,13 @@ class DBRestaurantes:
     def getIntervalo(min, max):
         datalist = []
         data = DBRestaurantes.getAll()
+        if max > data.count():
+            max = data.count()
         for i in range(min, max):
             datalist.append({'_id':str(data[i]['_id']), 'location':data[i]['location'], 'name':data[i]['name']})
+        return datalist
+
+    def size():
+        return restaurantes.count()
 
 
