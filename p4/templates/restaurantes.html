@@ -5,8 +5,19 @@
 <br>
 <h2 align="center">Restaurantes</h2>
 <br>
-<div class="container">
-    <h2>Condensed Table</h2>     
+
+<div align="center">
+    <form method="post">
+        <select name="type">
+            {% for i in range( session.lenintervalos ) %}
+            <option value="intervalo_{{ i }}">{{ session.intervalos[i]['min'] }} - {{ session.intervalos[i]['max'] }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+<div class="container">    
     <table class="table table-condensed">
         <thead>
             <tr>
@@ -16,11 +27,11 @@
             </tr>
         </thead>
         <tbody>
-            {% for i in range( session.restsize ) %}
+            {% for i in range(0,99) %}
                 <tr>
-                    <td>{{ session.restaurantes[i]['_id'] }}</td>
-                    <td>{{ session.restaurantes[i]['location'] }}</td>
-                    <td>{{ session.restaurantes[i]['name'] }}</td>
+                    <td align="center">{{ session.restaurantes[i]['_id'] }}</td>
+                    <td align="center">{{ session.restaurantes[i]['location']['coordinates'] }}</td>
+                    <td align="center">{{ session.restaurantes[i]['name'] }}</td>
                 </tr>
             {% endfor %}
         </tbody>
