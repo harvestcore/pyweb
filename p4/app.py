@@ -20,6 +20,22 @@ def addToHistory(page):
 
     session['history'] = history
 
+def getIntervalos(items, div):
+    intervalos = []
+    nointv = int(items / div)
+    index = 1
+
+    for i in range(nointv+1):
+        intmin = i * div
+        intmax = (index*div)-1
+        if intmax > items:
+            intmax = items
+        intervalos.append({'min':intmin, 'max':intmax})
+        index += 1
+
+    return intervalos
+
+
 @app.route('/')
 def inicio():
     addToHistory("inicio")
@@ -116,18 +132,33 @@ def modifyprofile_post():
         session['data'] = db[newUser]
         return redirect(url_for('modifyprofile'))
 
-@app.route('/restaurantes')
+@app.route('/restaurantes', methods=['GET'])
 def restaurantes():
-    data = dbmongo.getAll()
-    datalist = []
-    # session['restsize'] = data.count()
-    num = 500
-    session['restsize'] = num
+    session['intervalvalue'] = 100
+    items = DBRestaurantes.size()
+    session['restsize'] = items
+    intervalos = getIntervalos(items, session['intervalvalue'])
+    session['intervalos'] = intervalos
+    session['lenintervalos'] = len(session['intervalos'])
 
-    for i in range(num):
-        datalist.append({'_id':str(data[i]['_id']), 'location':data[i]['location'], 'name':data[i]['name']})
+    session['restaurantes'] = DBRestaurantes.getIntervalo(0, session['intervalvalue'])
+    return render_template('restaurantes.html')
 
-    session['restaurantes'] = datalist
+@app.route('/restaurantes', methods=['POST'])
+def restaurantes_post():
+    session['lenintervalos'] = len(session['intervalos'])
+    newinterval_value = 0
+    intstring = 'intervalo_'
+    # intvalue = session['intervalvalue']
+
+    for i in range(len(session['intervalos'])):
+        intstring += str(i)
+        if intstring in request.files:
+            newinterval_value = i
+            break
+        intstring = 'intervalo_'
+
+    session['restaurantes'] = DBRestaurantes.getIntervalo(newinterval_value * 100, ((newinterval_value+1) * 100) - 1 )
     return render_template('restaurantes.html')
 
 @app.errorhandler(404)
