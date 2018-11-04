@@ -32,7 +32,7 @@
                 </div>
     
                 <ul class="list-unstyled components">
-                    <p>¯\_(ツ)_/¯</p>
+                    <p>{%- if session.username -%} ¯\_( {{ session.username }} )_/¯ {% else %}¯\_( ツ )_/¯{%- endif -%}</p>
                     <li>
                         <a href="{{ url_for('inicio') }}">Home</a>
                     </li>
