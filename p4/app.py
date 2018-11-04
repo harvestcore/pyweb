@@ -10,6 +10,24 @@ db = PickleShareDB('pickledb')
 # db.clear()
 history = ["", "", ""]
 
+# def getIntervalos(items, div):
+#     intervalos = []
+#     intervalos2 = []
+#     nointv = int(items / div)
+#     index = 1
+
+#     for i in range(nointv+1):
+#         intmin = i * div
+#         intmax = (index*div)-1
+#         if intmax > items:
+#             intmax = items
+#         intervalos.append({'min':intmin, 'max':intmax})
+#         index += 1
+#         intervalos2.append(i)
+
+#     return {'values':intervalos, 'valuesindex':intervalos2}
+
+
 def notFound():
     return render_template('notfound.html')
 
@@ -19,22 +37,6 @@ def addToHistory(page):
         history.pop(3)
 
     session['history'] = history
-
-def getIntervalos(items, div):
-    intervalos = []
-    nointv = int(items / div)
-    index = 1
-
-    for i in range(nointv+1):
-        intmin = i * div
-        intmax = (index*div)-1
-        if intmax > items:
-            intmax = items
-        intervalos.append({'min':intmin, 'max':intmax})
-        index += 1
-
-    return intervalos
-
 
 @app.route('/')
 def inicio():
@@ -84,9 +86,10 @@ def login_post():
 
 @app.route('/logout')
 def logout():
-    if session.get('username') and session['loggedIn']:
-        session.pop('username')
-        session['loggedIn'] = False
+    if session.get('username') and session.get('loggedIn'):
+        if session['loggedIn']:
+            session.pop('username')
+            session['loggedIn'] = False
     addToHistory("logout")
     return redirect(url_for('inicio'))
 
@@ -104,16 +107,16 @@ def signup_post():
 
 @app.route('/profile')
 def profile():
-    if session.get('loggedin'):
-        if session['loggedin']:
+    if session.get('loggedIn'):
+        if session['loggedIn']:
             return render_template('profile.html')
     else:
         return redirect(url_for('inicio'))
 
 @app.route('/modifyprofile')
 def modifyprofile():
-    if session.get('loggedin'):
-        if session['loggedin']:
+    if session.get('loggedIn'):
+        if session['loggedIn']:
             return render_template('modifyprofile.html')
     else:
         return redirect(url_for('inicio'))
@@ -134,31 +137,75 @@ def modifyprofile_post():
 
 @app.route('/restaurantes', methods=['GET'])
 def restaurantes():
-    session['intervalvalue'] = 100
-    items = DBRestaurantes.size()
-    session['restsize'] = items
-    intervalos = getIntervalos(items, session['intervalvalue'])
-    session['intervalos'] = intervalos
-    session['lenintervalos'] = len(session['intervalos'])
-
-    session['restaurantes'] = DBRestaurantes.getIntervalo(0, session['intervalvalue'])
+    session['current_rest'] = {'name':'-', 'id':'-', 'coordinates':'-', 'type':'-'}
+    
+    addToHistory("restaurantes")
     return render_template('restaurantes.html')
 
 @app.route('/restaurantes', methods=['POST'])
 def restaurantes_post():
-    session['lenintervalos'] = len(session['intervalos'])
-    newinterval_value = 0
-    intstring = 'intervalo_'
-    # intvalue = session['intervalvalue']
+    ##  Update de datos
+    try:
+        mod_rest_name = request.form['rest_name']
+        mod_rest_coord = request.form['rest_coord']
+        mod_rest_type = request.form['rest_type']
+        
+        if mod_rest_name != session['current_rest']['name'] or mod_rest_coord != session['current_rest']['coordinates'] or mod_rest_type != session['current_rest']['type']:
+            Restaurantes.findAndUpdate(session['current_rest']['id'], {'name':mod_rest_name})
+            Restaurantes.findAndUpdate(session['current_rest']['id'], {'location':{'coordinates':mod_rest_coord, 'type':session['current_rest']['type']}})
+            Restaurantes.findAndUpdate(session['current_rest']['id'], {'location':{'coordinates':session['current_rest']['coordinates'], 'type':mod_rest_type}})
+            session['current_rest'] = {'name':mod_rest_name, 'id':session['current_rest']['id'], 'coordinates':mod_rest_coord, 'type':mod_rest_type}
+    except:
+        mod_rest_name = session['current_rest']['name']
+        mod_rest_coord = session['current_rest']['coordinates']
+        mod_rest_type = session['current_rest']['type']
+        session['current_rest'] = {'name':mod_rest_name, 'id':session['current_rest']['id'], 'coordinates':mod_rest_coord, 'type':mod_rest_type}
 
-    for i in range(len(session['intervalos'])):
-        intstring += str(i)
-        if intstring in request.files:
-            newinterval_value = i
-            break
-        intstring = 'intervalo_'
+    ## Búsqueda por nombre
+    try:
+        srchname = request.form['search_by_name']
+        rest = Restaurantes.getByName(srchname)
+        session['current_rest'] = {'name':rest['name'], 'id':str(rest['_id']), 'coordinates':rest['location']['coordinates'], 'type':rest['location']['type']}
+    except:
+        srchname = None
+    
+    ## Búsqueda por ID
+    try:
+        srchid = request.form['search_by_id']
+        rest = Restaurantes.getByID(srchid)
+        session['current_rest'] = {'name':rest['name'], 'id':str(rest['_id']), 'coordinates':rest['location']['coordinates'], 'type':rest['location']['type']}
+    except:
+        srchid = None
 
-    session['restaurantes'] = DBRestaurantes.getIntervalo(newinterval_value * 100, ((newinterval_value+1) * 100) - 1 )
+    ## Borrado por nombre
+    try:
+        delname = request.form['del_by_name']
+        rest = Restaurantes.delByName(delname)
+        session['current_rest'] = {'name':'-', 'id':'-', 'coordinates':'-', 'type':'-'}
+    except:
+        srchname = None
+    
+    ## Borrado por ID
+    try:
+        delid = request.form['del_by_id']
+        rest = Restaurantes.delByID(delid)
+        session['current_rest'] = {'name':'-', 'id':'-', 'coordinates':'-', 'type':'-'}
+    except:
+        delid = None
+
+    ##  Agregar restaurante
+    try:
+        add_rest_name = request.form['add_name']
+        add_rest_coord = request.form['add_coord']
+        add_rest_type = request.form['add_type']
+
+        Restaurantes.add(add_rest_name, add_rest_coord, add_rest_type)
+    except:
+        add_rest_name = None
+        add_rest_coord = None
+        add_rest_type = None
+
+    addToHistory("restaurantes")
     return render_template('restaurantes.html')
 
 @app.errorhandler(404)
