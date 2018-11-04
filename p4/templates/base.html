@@ -3,55 +3,158 @@
 
 <html>
 	<head>
-		<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='styles.css') }}" />
+        <title>{% block title %}{% endblock %}</title>
+        
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">    
+        
         <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icon.png') }}">
-        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
-        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
-        <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-		<title>{% block title %}{% endblock %}</title>
-	</head>
+		<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='styles.css') }}" />
+    
+        <!-- Bootstrap CSS CDN -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <!-- Our Custom CSS -->
+        <link rel="stylesheet" href="style.css">
+
+        <!-- Font Awesome JS -->
+        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+    </head>
 
 	<body>
-        <header>
-            <img src="{{ url_for('static', filename='images/logo2.png') }}" class="logo">
-            <div class="cabecera">
-                <!--<h1 align="center">¯\_(ツ)_/¯</h1>-->
+        <div class="wrapper">
+            <!-- Sidebar  -->
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                    <img src="{{ url_for('static', filename='images/logo2.png') }}" class="logo">
+                </div>
+    
+                <ul class="list-unstyled components">
+                    <p>¯\_(ツ)_/¯</p>
+                    <li>
+                        <a href="{{ url_for('inicio') }}">Home</a>
+                    </li>
+                    <li>
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Práctica 4</a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu">
+                            <li>
+                                <a href="{{ url_for('profile') }}">Perfil</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('modifyprofile') }}">Panel de control</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('restaurantes') }}">Restaurantes</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Login</a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu">
+                            <li>
+                                <a href="{{ url_for('signup') }}">Sign up</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('login') }}">Login</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('logout') }}">Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#miscSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Misc</a>
+                        <ul class="collapse list-unstyled" id="miscSubmenu">
+                            <li>
+                                <a href="{{ url_for('ipcontainer') }}">IPContainer</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('repositorios') }}">Repositorios</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('proyectos') }}">Proyectos</a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/harvestcore">GitHub</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('contacto') }}">Contact</a>
+                    </li>
+                </ul>
+                <ul class="list-unstyled CTAs">
+                    <p>Historial:</p>
+                    {% for i in range(0,3) -%}
+                    {% if session['history'][i] != "" -%}
+                    <li>
+                        <a href="{{ url_for(session.history[i]) }}">{{ session.history[i] }}</a>
+                    </li>
+                    {%- endif %}
+                    {%- endfor %}
+                </ul>
+            </nav>
+            
+            <div id="content">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid">
+                        <button type="button" id="sidebarCollapse" class="btn btn-info">
+                            <i class="fas fa-align-left"></i>
+                        </button>
+                        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="fas fa-align-justify"></i>
+                        </button>
+                        
+                        
+                        {% block contentheader %}
+                        {% endblock %}
+                        
+                        <!--
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="nav navbar-nav ml-auto">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="#">Page</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Page</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Page</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Page</a>
+                                </li>
+                            </ul>
+                        </div>
+                        -->
+                    </div>
+                </nav>
+    
+                {% block content %}
+                {% endblock %}
             </div>
-        </header>
+        </div>
+            
+        <div class="footer">
+            Created by <a href="https://github.com/harvestcore" target="_blank">Ángel Gómez</a> ~ <a href="{{ url_for('static', filename='LICENSE.txt') }}" target="_blank">LICENSE</a>
+        </div>
+        
 
-		<div class="sidenav">
-			<a href="{{ url_for('inicio') }}">Inicio</a>
-			<a href="{{ url_for('ipcontainer') }}">IPContainer</a>
-			<a href="{{ url_for('repositorios') }}">Repositorios</a>
-			<a href="{{ url_for('proyectos') }}">Proyectos</a>
-			<a href="{{ url_for('contacto') }}">Contacto</a>
-            <a href="https://github.com/harvestcore" target="_blank">GitHub</a>
-            <br><br>
-            <a href="{{ url_for('signup') }}">Sign up</a>
-            <a href="{{ url_for('login') }}">Login</a>
-            <a href="{{ url_for('logout') }}">Logout</a>
-            <br>
-            <a href="{{ url_for('profile') }}">Perfil</a>
-            <a href="{{ url_for('modifyprofile') }}">Panel de control</a>
-            <a href="{{ url_for('restaurantes') }}">Restaurantes</a>
-            <br>
-            <h3>User: {% if 'username' in session -%} {{ session.username }} {% else -%} None {%- endif %}</h3>
-            <br>
-            <h3>Historial:</h3>
-            {% for i in range(0,3) -%}
-                {% if session['history'][i] != "" -%}
-                    <a href="{{ url_for(session.history[i]) }}">{{ session.history[i] }}</a>
-                {%- endif %}
-            {%- endfor %}
-		</div>
+        <!-- jQuery CDN - Slim version (=without AJAX) -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <!-- Popper.JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
-		<div class="contenido_pag">
-			{% block content %}
-			{% endblock %}
-		</div>
-
-		<div class="footer">
-			Created by <a href="https://github.com/harvestcore" target="_blank">Ángel Gómez</a> ~ <a href="{{ url_for('static', filename='LICENSE.txt') }}" target="_blank">LICENSE</a>
-		</div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                });
+            });
+        </script>
 	</body>
 </html>
