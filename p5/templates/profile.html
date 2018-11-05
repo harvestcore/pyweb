@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Perfil{% endblock %}
+
+{% block contentheader %}
+<h2>Perfil</h2>
+{% endblock %}
+
+{% block content %}
+<table id="profile" align="center">
+    <tr>
+        <td>Username</td>
+        <td>{{ session.data['username'] }}</td>
+    </tr>
+    <tr>
+        <td>Password</td>
+        <td>{{ session.data['password'] }}</td>
+    </tr>
+    <tr>
+        <td>Nombre</td>
+        <td>{{ session.data['firstname'] }}</td>
+    </tr>
+    <tr>
+        <td>Apellidos</td>
+        <td>{{ session.data['lastname'] }}</td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>{{ session.data['email'] }}</td>
+    </tr>
+    <tr>
+        <td>Teléfono</td>
+        <td>{{ session.data['telnumber'] }}</td>
+    </tr>
+    <tr>
+        <td>Fecha nacimiento</td>
+        <td>{{ session.data['birthdate'] }}</td>
+    </tr>
+</table>
+{% endblock %}

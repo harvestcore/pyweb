@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Panel de control{% endblock %}
+
+{% block contentheader %}
+<h2>Panel de control</h2>
+{% endblock %}
+
+{% block content %}
+<form method="POST" align="center">
+    <input type="text" name="username" placeholder="Username" value="{{ session['data']['username'] }}" required><br><br>
+    <input type="password" name="password" placeholder="Password" value="{{ session['data']['password'] }}" required><br><br>
+    <input type="text" name="firstname" placeholder="First name" value="{{ session['data']['firstname'] }}" required><br><br>
+    <input type="text" name="lastname" placeholder="Last name" value="{{ session['data']['lastname'] }}" required><br><br>
+    <input type="email" name="email" placeholder="Email" value="{{ session['data']['email'] }}" required><br><br>
+    <input type="tel" name="telnumber" placeholder="Telephone number" value="{{ session['data']['telnumber'] }}" required><br><br>
+    <input type="date" name="birthdate" placeholder="Birth date" value="{{ session['data']['birthdate'] }}" required><br><br>
+    <br>
+    <input class="btn btn-primary" type="submit" value="Update!">
+</form>
+{% endblock %}
