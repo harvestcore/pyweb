@@ -16,10 +16,32 @@ class Restaurantes:
             restaurantes.insert_one(jrow)
 
     def getByID(_id):
-        return restaurantes.find_one({"_id": ObjectId(_id)})
+        rest = restaurantes.find_one({"_id": ObjectId(_id)})
+        rst = []
+        rst.append({
+                'name': rest['name'],
+                '_id': str(rest['_id']),
+                'location': rest['location']
+            })
+
+        return rst
 
     def getByName(name):
         return restaurantes.find_one({"name": name})
+
+    def getListByName(name):
+        rest = restaurantes.find({"name": { "$regex": ".*" + name + ".*" } })
+        lst = []
+
+        for r in rest:
+            rst = {
+                'name': r['name'],
+                '_id': str(r['_id']),
+                'location': r['location']
+            }
+            lst.append(rst)
+
+        return lst
 
     def getAll():
         return restaurantes.find({})

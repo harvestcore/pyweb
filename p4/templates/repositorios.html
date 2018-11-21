@@ -7,85 +7,37 @@
 {% endblock %}
 
 {% block content %}
-<table align="center" id="repo">
-    <tr>
-        <th>IPContainer</th>
-        <th class="rlink"><a href="https://github.com/harvestcore/IPContainer" target="_blank">Link</a></th>
-    </tr>
-    <tr>
-        <td colspan="2">Microservicio para almacenar y gestionar direcciones IP.</td>
-    </tr>
+<table align="center" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Lenguaje</th>
+            <th>Forks</th>
+            <th>Stars</th>
+            <th>Última modificación</th>
+            <th>Licencia</th>
+            <th>Link</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for repo in session.repos %}
+            <tr>
+                <td>{{ repo.name }}</td>
+                <td>{{ repo.description }}</td>
+                <td>{{ repo.language }}</td>
+                <td>{{ repo.forks }}</td>
+                <td>{{ repo.stars }}</td>
+                <td>{{ repo.updated_at }}</td>
+                {% if repo.license %}
+                <td>{{ repo.license.name }}</td>
+                {% else %}
+                <td>{{ repo.license }}</td>
+                {% endif %}
+                <td><a href="{{ repo.url }}" target="_blank">Link</a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
 </table>
 
-<br><br>
-
-<table align="center" id="repo">
-    <tr>
-        <th>Ejercicios IV</th>
-        <th class="rlink"><a href="https://github.com/harvestcore/IV1819-Ejercicios" target="_blank">Link</a></th>
-    </tr>
-    <tr>
-        <td colspan="2">Ejercicios de Infraestructuras Virtuales.</td>
-    </tr>
-</table>
-
-<br><br>
-
-<table align="center" id="repo">
-    <tr>
-        <th>Harvest-Web</th>
-        <th class="rlink"><a href="https://github.com/harvestcore/harvest-web" target="_blank">Link</a></th>
-    </tr>
-    <tr>
-        <td colspan="2">Web personal de pruebas hosteada en una Raspberry Pi 3B.</td>
-    </tr>
-</table>
-
-<br><br>
-
-<table align="center" id="repo">
-    <tr>
-        <th>LAMPTweetBot-Web</th>
-        <th class="rlink"><a href="https://github.com/harvestcore/LAMPTweetBot" target="_blank">Link</a></th>
-    </tr>
-    <tr>
-        <td colspan="2">Bot que tweetea cada vez que se accede al servidor apache de una web.</td>
-    </tr>
-</table>
-
-<br><br>
-
-<table align="center" id="repo">
-    <tr>
-        <th>OpenGL_Testing</th>
-        <th class="rlink"><a href="https://github.com/harvestcore/OpenGL_Testing" target="_blank">Link</a></th>
-    </tr>
-    <tr>
-        <td colspan="2">Pequeño programa para visualizar objetos 3D. Hecho con C++ y OpenGL.</td>
-    </tr>
-</table>
-
-<br><br>
-
-<table align="center" id="repo">
-    <tr>
-        <th>AIML CA</th>
-        <th class="rlink"><a href="https://github.com/harvestcore/AIML_Conversational_Agent" target="_blank">Link</a></th>
-    </tr>
-    <tr>
-        <td colspan="2">Agente conversacional hecho con AIML.</td>
-    </tr>
-</table>
-
-<br><br>
-
-<table align="center" id="repo">
-    <tr>
-        <th>WEB on VM</th>
-        <th class="rlink"><a href="https://github.com/harvestcore/SWAP/blob/master/trabajo/trabajo.md" target="_blank">Link</a></th>
-    </tr>
-    <tr>
-        <td colspan="2">Despliegue de un servidor web en un entorno virtualizado (XenServer).</td>
-    </tr>
-</table>
 {% endblock %}
