@@ -16,13 +16,45 @@ class Restaurantes:
             restaurantes.insert_one(jrow)
 
     def getByID(_id):
-        return restaurantes.find_one({"_id": ObjectId(_id)})
+        rest = restaurantes.find_one({"_id": ObjectId(_id)})
+        rst = []
+        rst.append({
+                'name': rest['name'],
+                'id': str(rest['_id']),
+                'location': rest['location']
+            })
+
+        return rst
 
     def getByName(name):
         return restaurantes.find_one({"name": name})
 
+    def getListByName(name):
+        rest = restaurantes.find({"name": { "$regex": ".*" + name + ".*" } })
+        lst = []
+
+        for r in rest:
+            lst.append({
+                'name': r['name'],
+                'id': str(r['_id']),
+                'location': r['location']
+            })
+
+        return lst
+
     def getAll():
-        return restaurantes.find({})
+        rest = restaurantes.find({})
+        lst = []
+
+        for r in rest:
+            lst.append({
+                'name': r['name'],
+                'id': str(r['_id']),
+                'location': r['location']
+            })
+        
+        return lst
+        
 
     def findAndUpdate(_id, update):
         return restaurantes.find_one_and_update({'_id': ObjectId(_id)}, {'$set': update}, projection={'seq':True, '_id':False}, upsert = True)

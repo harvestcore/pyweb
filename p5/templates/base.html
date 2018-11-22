@@ -10,13 +10,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">    
         
         {% load static %}
-        <link rel="icon" type="image/png" href="{% static 'images/icon.png' %}">
-		<link rel="stylesheet" type=text/css href="{% static 'style.css' %}" />
+        <link rel="icon" type="image/png" href="{% static "images/icon.png" %}">
+		<link rel="stylesheet" type=text/css href="{% static "styles.css" %}" />
     
         <!-- Bootstrap CSS CDN -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-        <!-- Our Custom CSS -->
-        <link rel="stylesheet" href="style.css">
 
         <!-- Font Awesome JS -->
         <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -44,10 +42,10 @@
                                 <a href="{% url 'profile' %}">Perfil</a>
                             </li>
                             <li>
-                                <a href="{% url 'modifyprofile' %}}">Panel de control</a>
+                                <a href="{% url 'modifyprofile' %}">Panel de control</a>
                             </li>
                             <li>
-                                <a href="{% url 'restaurantes' %}}">Restaurantes</a>
+                                <a href="{% url 'restaurantes' %}">Restaurantes</a>
                             </li>
                         </ul>
                     </li>
@@ -55,13 +53,13 @@
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Login</a>
                         <ul class="collapse list-unstyled" id="pageSubmenu">
                             <li>
-                                <a href="{% url 'signup' %}}">Sign up</a>
+                                <a href="{% url 'signup' %}">Sign up</a>
                             </li>
                             <li>
-                                <a href="{% url 'login' %}}">Login</a>
+                                <a href="{% url 'login' %}">Login</a>
                             </li>
                             <li>
-                                <a href="{% url 'logout' %}}">Logout</a>
+                                <a href="{% url 'logout' %}">Logout</a>
                             </li>
                         </ul>
                     </li>
@@ -69,13 +67,13 @@
                         <a href="#miscSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Misc</a>
                         <ul class="collapse list-unstyled" id="miscSubmenu">
                             <li>
-                                <a href="{% url 'ipcontainer' %}}">IPContainer</a>
+                                <a href="{% url 'ipcontainer' %}">IPContainer</a>
                             </li>
                             <li>
-                                <a href="{% url 'repositorios' %}}">Repositorios</a>
+                                <a href="{% url 'repositorios' %}">Repositorios</a>
                             </li>
                             <li>
-                                <a href="{% url 'proyectos' %}}">Proyectos</a>
+                                <a href="{% url 'proyectos' %}">Proyectos</a>
                             </li>
                             <li>
                                 <a href="https://github.com/harvestcore">GitHub</a>
@@ -83,18 +81,11 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="{% url 'contacto' %}}">Contact</a>
+                        <a href="{% url 'contacto' %}">Contact</a>
                     </li>
                 </ul>
                 <ul class="list-unstyled CTAs">
                     <p>Historial:</p>
-                    {% for i in range(0,3) %}
-                    {% if session['history'][i] != "" %}
-                    <li>
-                        <a href="{{ url_for(session.history[i]) }}">{{ session.history[i] }}</a>
-                    </li>
-                    {% endif %}
-                    {% endfor %}
                 </ul>
             </nav>
             
@@ -139,7 +130,7 @@
         </div>
             
         <div class="footer">
-            Created by <a href="https://github.com/harvestcore" target="_blank">Ángel Gómez</a> ~ <a href="{{ url_for('static', filename='LICENSE.txt') }}" target="_blank">LICENSE</a>
+            Created by <a href="https://github.com/harvestcore" target="_blank">Ángel Gómez</a> ~ <a href="{% static 'LICENSE.txt' %}" target="_blank">LICENSE</a>
         </div>
         
 

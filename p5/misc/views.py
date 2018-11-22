@@ -10,9 +10,15 @@ def ipcontainer(request):
 def proyectos(request):
     context = {}
     # addToHistory("proyectos")
-    return render_template(request, 'proyectos.html', context)
+    return render(request, 'proyectos.html', context)
 
 def repositorios(request):
     context = {}
     # addToHistory("repositorios")
-    return render_template(request, 'repositorios.html', context)
+    return render(request, 'repositorios.html', context)
+
+def contacto(request):
+    context = {}
+    
+    # addToHistory("contacto")
+    return render(request, 'contacto.html', context)

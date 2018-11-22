@@ -7,10 +7,9 @@
 {% endblock %}
 
 {% block content %}
-<form method="POST" align="center">
-    <input type="text" name="username" placeholder="Username" required><br><br>
-    <input type="password" name="password" placeholder="Password" required><br>
-    <br>
+<form action="/login" method="post" align="center">
+    {% csrf_token %}
+    {{ form.as_p }}
     <input class="btn btn-primary" type="submit" value="Login!">
 </form>
 {% endblock %}

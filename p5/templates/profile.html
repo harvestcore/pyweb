@@ -10,31 +10,31 @@
 <table id="profile" align="center">
     <tr>
         <td>Username</td>
-        <td>{{ session.data['username'] }}</td>
+        <td>{{ currentuser.username }}</td>
     </tr>
     <tr>
         <td>Password</td>
-        <td>{{ session.data['password'] }}</td>
+        <td>{{ currentuser.password }}</td>
     </tr>
     <tr>
         <td>Nombre</td>
-        <td>{{ session.data['firstname'] }}</td>
+        <td>{{ currentuser.firstname }}</td>
     </tr>
     <tr>
         <td>Apellidos</td>
-        <td>{{ session.data['lastname'] }}</td>
+        <td>{{ currentuser.lastname }}</td>
     </tr>
     <tr>
         <td>Email</td>
-        <td>{{ session.data['email'] }}</td>
+        <td>{{ currentuser.email }}</td>
     </tr>
     <tr>
         <td>Teléfono</td>
-        <td>{{ session.data['telnumber'] }}</td>
+        <td>{{ currentuser.telnumber }}</td>
     </tr>
     <tr>
         <td>Fecha nacimiento</td>
-        <td>{{ session.data['birthdate'] }}</td>
+        <td>{{ currentuser.birthdate }}</td>
     </tr>
 </table>
 {% endblock %}

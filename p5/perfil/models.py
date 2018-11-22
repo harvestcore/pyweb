@@ -1,3 +1,4 @@
 from django.db import models
+from pickleshare import *
 
-# Create your models here.
+db = PickleShareDB('pickledb')

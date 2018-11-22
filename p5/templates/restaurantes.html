@@ -7,46 +7,58 @@
 {% endblock %}
 
 {% block content %}
-<h3 align="center">Búsqueda</h3>
+<h3 align="center">Búsqueda por nombre:</h3>
 <form method="POST" align="center">
-    <input type="text" name="search_by_name" placeholder="Search by name">
+    {% csrf_token %}
+    {{ form.as_p }}
     <input class="btn btn-primary" type="submit" value="Search">
 </form>
-<br>
+
+<br><br>
+
+<h3 align="center">Búsqueda por ID:</h3>
 <form method="POST" align="center">
-    <input type="text" name="search_by_id" placeholder="Search by ID">
+    {% csrf_token %}
+    {{ form.as_p }}
     <input class="btn btn-primary" type="submit" value="Search">
 </form>
 
 <br><br><br>
 
-<table id="profile" align="center">
-    <tr>
-        <td>Name</td>
-        <td>{{ session['current_rest']['name'] }}</td>
-    </tr>
-    <tr>
-        <td>ID</td>
-        <td>{{ session.current_rest['id'] }}</td>
-    </tr>
-    <tr>
-        <td>Coordinates</td>
-        <td>{{ session['current_rest']['coordinates'] }}</td>
-    </tr>
-    <tr>
-        <td>Type</td>
-        <td>{{ session['current_rest']['type'] }}</td>
-    </tr>
-</table>
+<table align="center" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>ID</th>
+                <th>Coordenadas</th>
+                <th>Tipo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in data %}
+                <tr>
+                    <td>{{ r.name }}</td>
+                    <td>{{ r.id }}</td>
+                    <td>{{ r.location.coordinates }}</td>
+                    <td>{{ r.location.type }}</td>
+                    <td>
+                        <a class="btn btn-danger" role="button">Borrar</a>
+                        <a class="btn btn-primary" role="button">Editar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 <br><br><br>
 
 <h3 align="center">Update restaurant</h3>
 <form method="POST" align="center">
-    <input type="text" name="rest_name" placeholder="Name" value="{{ session['current_rest']['name'] }}" required><br>
-    <input type="text" name="rest_ID" placeholder="ID" value="{{ session.current_rest['id'] }}" required readonly=True><br>
-    <input type="text" name="rest_coord" placeholder="Coordinates" value="{{ session['current_rest']['coordinates'] }}" required><br>
-    <input type="text" name="rest_type" placeholder="Type" value="{{ session['current_rest']['type'] }}" required><br>
+    <input type="text" name="rest_name" placeholder="Name" value="{{ current_rest.name }}" required><br>
+    <input type="text" name="rest_ID" placeholder="ID" value="{{ current_rest.id }}" required readonly=True><br>
+    <input type="text" name="rest_coord" placeholder="Coordinates" value="{{ current_rest.coordinates }}" required><br>
+    <input type="text" name="rest_type" placeholder="Type" value="{{ current_rest.type }}" required><br>
     <br>
     <input class="btn btn-primary" type="submit" value="Update">
 </form>
