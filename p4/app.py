@@ -158,28 +158,43 @@ def modifyprofile_post():
 def restaurantes():
     session['current_rest'] = {'name':'-', 'id':'-', 'coordinates':'-', 'type':'-'}
     
+    session['lista_rest'] = []
+
     addToHistory("restaurantes")
     return render_template('restaurantes.html')
 
+@app.route('/edit', methods=['GET'])
+def edit():
+    strid = str(request.args.get('id'))
+    rest = Restaurantes.getByID(strid)
+    session['current_rest'] = {'name':rest['name'], 'id':strid, 'coordinates':rest['location']['coordinates'], 'type':rest['location']['type']}
+    return render_template('edit_restaurantes.html')
+
+@app.route('/edit', methods=['POST'])
+def edit_post():
+    strid = str(request.args.get('id'))
+    rest = Restaurantes.getByID(strid)
+
+    try:
+        mod_rest_name = request.form['rest_name']
+        mod_rest_coord = request.form['rest_coord']
+        mod_rest_type = request.form['rest_type']
+        
+        if mod_rest_name != session['current_rest']['name'] or mod_rest_coord != session['current_rest']['coordinates'] or mod_rest_type != session['current_rest']['type']:
+            Restaurantes.findAndUpdate(session['current_rest']['id'], {'name':mod_rest_name})
+            Restaurantes.findAndUpdate(session['current_rest']['id'], {'location':{'coordinates':mod_rest_coord, 'type':session['current_rest']['type']}})
+            Restaurantes.findAndUpdate(session['current_rest']['id'], {'location':{'coordinates':session['current_rest']['coordinates'], 'type':mod_rest_type}})
+            session['current_rest'] = {'name':mod_rest_name, 'id':session['current_rest']['id'], 'coordinates':mod_rest_coord, 'type':mod_rest_type}
+    except:
+        mod_rest_name = session['current_rest']['name']
+        mod_rest_coord = session['current_rest']['coordinates']
+        mod_rest_type = session['current_rest']['type']
+        session['current_rest'] = {'name':mod_rest_name, 'id':session['current_rest']['id'], 'coordinates':mod_rest_coord, 'type':mod_rest_type}
+
+    return render_template('edit_restaurantes.html')
+
 @app.route('/restaurantes', methods=['POST'])
 def restaurantes_post():
-    ##  Update de datos
-    # try:
-    #     mod_rest_name = request.form['rest_name']
-    #     mod_rest_coord = request.form['rest_coord']
-    #     mod_rest_type = request.form['rest_type']
-        
-    #     if mod_rest_name != session['current_rest']['name'] or mod_rest_coord != session['current_rest']['coordinates'] or mod_rest_type != session['current_rest']['type']:
-    #         Restaurantes.findAndUpdate(session['current_rest']['id'], {'name':mod_rest_name})
-    #         Restaurantes.findAndUpdate(session['current_rest']['id'], {'location':{'coordinates':mod_rest_coord, 'type':session['current_rest']['type']}})
-    #         Restaurantes.findAndUpdate(session['current_rest']['id'], {'location':{'coordinates':session['current_rest']['coordinates'], 'type':mod_rest_type}})
-    #         session['current_rest'] = {'name':mod_rest_name, 'id':session['current_rest']['id'], 'coordinates':mod_rest_coord, 'type':mod_rest_type}
-    # except:
-    #     mod_rest_name = session['current_rest']['name']
-    #     mod_rest_coord = session['current_rest']['coordinates']
-    #     mod_rest_type = session['current_rest']['type']
-    #     session['current_rest'] = {'name':mod_rest_name, 'id':session['current_rest']['id'], 'coordinates':mod_rest_coord, 'type':mod_rest_type}
-
     ## Búsqueda por nombre
     try:
         srchname = request.form['search_by_name']

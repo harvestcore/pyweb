@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Restaurantes{% endblock %}
+
+{% block contentheader %}
+<h2>Restaurantes</h2>
+{% endblock %}
+
+{% block content %}
+<h3 align="center">Modificar restaurante</h3>
+
+<form method="POST" align="center">
+    <h4>Nombre</h4>
+    <input type="text" name="rest_name" placeholder="Name" value="{{ session.current_rest['name'] }}" required><br>
+    <br>
+    <h4>ID</h4>
+    <input type="text" name="rest_ID" placeholder="ID" value="{{ session.current_rest['id'] }}" required readonly=True><br>
+    <br>
+    <h4>Coordenadas</h4>
+    <input type="text" name="rest_coord" placeholder="Coordinates" value="{{ session.current_rest['coordinates'] }}" required><br>
+    <br>
+    <h4>Tipo localización</h4>
+    <input type="text" name="rest_type" placeholder="Type" value="{{ session.current_rest['type'] }}" required><br>
+    <br>
+    <input class="btn btn-primary" type="submit" value="Actualizar">
+</form>
+
+<div align="center">
+    <br>
+    <a class="btn btn-primary" href="{{ url_for('restaurantes') }}" role="button">Volver</a>
+</div>
+
+{% endblock %}

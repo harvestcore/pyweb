@@ -17,12 +17,11 @@ class Restaurantes:
 
     def getByID(_id):
         rest = restaurantes.find_one({"_id": ObjectId(_id)})
-        rst = []
-        rst.append({
+        rst = {
                 'name': rest['name'],
                 '_id': str(rest['_id']),
                 'location': rest['location']
-            })
+            }
 
         return rst
 
