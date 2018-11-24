@@ -4,6 +4,10 @@
 Vagrantfile
 .vs
 .vscode
+pickledb/
+*.zip
+*.png
+*.svg
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
