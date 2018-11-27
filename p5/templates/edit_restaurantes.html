@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Restaurantes{% endblock %}
+
+{% block contentheader %}
+<h2>Restaurantes</h2>
+{% endblock %}
+
+{% block content %}
+<h3 align="center">Modificar restaurante</h3>
+<div align="center">
+    <br>
+    <a class="btn btn-primary" href="{% url 'restaurantes' %}" role="button">Volver</a>
+</div>
+
+<div class="tablerest" align="center">
+    <div class="col-md-3" align="center">
+        <div class="well" align="center">
+            <h3><b>{{ current_rest.name }}</b></h3>
+            <hr>
+            <p>{{ current_rest.id }}</p>
+            <hr>
+            <p>{{ current_rest.location.coordinates }}</p>
+            <hr>
+            <p>{{ current_rest.location.type }}</p>
+            <hr>
+        </div>
+    </div>
+</div>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input class="btn btn-primary" type="submit" value="Actualizar">
+</form>
+    
+{% endblock %}

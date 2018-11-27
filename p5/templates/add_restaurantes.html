@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Restaurantes{% endblock %}
+
+{% block contentheader %}
+<h2>Restaurantes</h2>
+{% endblock %}
+
+{% block content %}
+<h3 align="center">Agregar restaurante</h3>
+
+{% if added %}
+<h3 align="center">Se ha agregado:</h3>
+<div class="tablerest" align="center">
+    <div class="col-md-3" align="center">
+        <div class="well" align="center">
+            <h3><b>{{ current_rest.name }}</b></h3>
+            <hr>
+            <p>{{ current_rest.id }}</p>
+            <hr>
+            <p>{{ current_rest.location.coordinates }}</p>
+            <hr>
+            <p>{{ current_rest.location.type }}</p>
+            <hr>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<br><br>
+
+<div class="formularioxd">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input class="btn btn-primary" type="submit" value="Agregar">
+    </form>
+</div>
+    
+{% endblock %}

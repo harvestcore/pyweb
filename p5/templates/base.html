@@ -31,12 +31,12 @@
                 </div>
     
                 <ul class="list-unstyled components">
-                    <p>{% if session.username %} ¯\_( {{ session.username }} )_/¯ {% else %}¯\_( ツ )_/¯{% endif %}</p>
+                    <p>{% if current_user.loggedin %} ¯\_( {{ current_user.username }} )_/¯ {% else %}¯\_( ツ )_/¯{% endif %}</p>
                     <li>
                         <a href="{% url 'index' %}">Home</a>
                     </li>
                     <li>
-                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Práctica 4</a>
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Perfil</a>
                         <ul class="collapse list-unstyled" id="homeSubmenu">
                             <li>
                                 <a href="{% url 'profile' %}">Perfil</a>
@@ -44,8 +44,16 @@
                             <li>
                                 <a href="{% url 'modifyprofile' %}">Panel de control</a>
                             </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#restSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Restaurantes</a>
+                        <ul class="collapse list-unstyled" id="restSubmenu">
                             <li>
-                                <a href="{% url 'restaurantes' %}">Restaurantes</a>
+                                <a href="{% url 'restaurantes' %}">Búsqueda</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'add' %}">Agregar restaurante</a>
                             </li>
                         </ul>
                     </li>
@@ -76,7 +84,7 @@
                                 <a href="{% url 'proyectos' %}">Proyectos</a>
                             </li>
                             <li>
-                                <a href="https://github.com/harvestcore">GitHub</a>
+                                <a href="https://github.com/harvestcore" target="_blank">GitHub</a>
                             </li>
                         </ul>
                     </li>

@@ -8,7 +8,6 @@ from .forms import *
 
 
 
-
 #   Vista del login
 #   GET: Muestra formulario para hacer login
 #   POST: Logea al usuario
@@ -21,57 +20,110 @@ class LoginView(TemplateView):
 
     def post(self, request):
         if request.method == 'POST':
+            blankform = LoginForm()
             form = LoginForm(request.POST)
 
             if form.is_valid():
                 user = form.cleaned_data.get('username')
                 passwd = form.cleaned_data.get('password')
 
-                user = authenticate(username=user, password=passwd)
+                if user in db.keys():
+                    data = db[user]
+                    if data['password'] == passwd:
+                        usr = {
+                                'username': data['username'],
+                                'email': data['email'],
+                                'firstname': data['firstname'],
+                                'lastname': data['lastname'],
+                                'birthdate': data['birthdate'],
+                                'telnumber': data['telnumber'],
+                                'loggedin': True
+                            }
 
-                if user:
-                    if user.is_active:
-                        login(request, user)
-                        return HttpResponseRedirect('/index/')
-                
-                    else:
-                        return HttpResponse("Account disabled.")
-                
+                        request.session['current_user'] = usr
+
+                        return HttpResponseRedirect('/')
+                            
                 else:
-                    return HttpResponse("Invalid user or password.")
-
-        else:
-            return render(request, 'main.html', {})
+                    return render(request, self.template, {'form': blankform})
 
     
 #   Vista de la actualización de perfil
 #   GET: Muestra tabla con los datos del usuario
 #   POST: Updatea los datos del usuario
+
 class UpdateProfileView(TemplateView):
     template = 'modifyprofile.html'
 
     def get(self, request):
         form = ProfileForm()
-        if context['currentuserstatus']['logged_in'] == True:
-            return render(request, 'modifyprofile.html', context)
+        if request.session.get('current_user')['loggedin']:
+            return render(request, self.template, {'form': form})
         else:
-            return render(request, 'main.html', context)
-        #return render(request, self.template, {'form': form})
+            return HttpResponseRedirect('/')
 
     def post(self, request):
         form = ProfileForm(request.POST)
+        blankform = ProfileForm()
 
         if form.is_valid():
-            newUser = form.cleaned_data.get('username')
-            actualUser = context['currentuserstatus']['username']
-            db[newUser] = {"username":request.POST.get('username'), "password":request.POST.get('password'), "firstname":request.POST.get('firstname'), "lastname":request.POST.get('lastname'), "email":request.POST.get('email'), "telnumber":request.POST.get('telnumber'), "birthdate":request.POST.get('birthdate')}
-            if actualUser != newUser:
-                db.pop(actualUser)
-                session['data'] = db[newUser]
-                return render(request, 'logout.html', context)
-            else:
-                context['data'] = db[newUser]
-                return render(request, 'modifyprofile', context)
+            if request.session.get('current_user')['username'] in db.keys():
+                user = db[request.session.get('current_user')['username']]
+                usr = {
+                    'username': user['username'],
+                    'password': user['password'],
+                    'email': user['email'],
+                    'firstname': user['firstname'],
+                    'lastname': user['lastname'],
+                    'birthdate': user['birthdate'],
+                    'telnumber': user['telnumber']
+                }
+
+                if form.cleaned_data.get('username'):
+                    usr['username'] = form.cleaned_data.get('username')
+
+                if form.cleaned_data.get('password'):
+                    usr['password'] = form.cleaned_data.get('password')
+
+                if form.cleaned_data.get('email'):
+                    usr['email'] = form.cleaned_data.get('email')
+
+                if form.cleaned_data.get('firstname'):
+                    usr['firstname'] = form.cleaned_data.get('firstname')
+
+                if form.cleaned_data.get('lastname'):
+                    usr['lastname'] = form.cleaned_data.get('lastname')
+
+                if form.cleaned_data.get('birthdate'):
+                    usr['birthdate'] = form.cleaned_data.get('birthdate')
+
+                if form.cleaned_data.get('telnumber'):
+                    usr['telnumber'] = form.cleaned_data.get('telnumber')
+
+                usr2 = {
+                        'username': usr['username'],
+                        'email': usr['email'],
+                        'firstname': usr['firstname'],
+                        'lastname': usr['lastname'],
+                        'birthdate': usr['telnumber'],
+                        'telnumber': usr['birthdate'],
+                        'loggedin': True
+                    }
+
+                request.session['current_user'] = usr2
+
+                if user['username'] != usr['username']:
+                    db.pop(user['username'])
+                    db[usr['username']] = usr
+                    return HttpResponseRedirect('/perfil/logout')
+                
+                else:
+                    db[usr['username']] = usr
+                    return render(request, self.template, {'form': blankform})
+
+            return HttpResponseRedirect('/perfil/modifyprofile')
+        
+        return HttpResponseRedirect('/perfil/modifyprofile')
 
     
 #   Vista del logout
@@ -79,10 +131,20 @@ class UpdateProfileView(TemplateView):
 class LogoutView(TemplateView):
 
     def get(self, request):
-        if context['currentuserstatus']['username'] != '-' or context['currentuserstatus']['loggedIn'] == True:
-            context['currentuserstatus']['username'] = '-'
-            context['currentuserstatus']['logged_in'] = False
-        return render(request, 'main.html', context)
+        if request.session['current_user']['username'] != '' or request.session['current_user']['loggedin'] == True:
+            usr = {
+                    'username': '',
+                    'email': '',
+                    'firstname': '',
+                    'lastname': '',
+                    'birthdate': '',
+                    'telnumber': '',
+                    'loggedin': False
+                }
+
+            request.session['current_user'] = usr
+        
+        return HttpResponseRedirect('/')
 
 
 #   Vista del signup.
@@ -90,32 +152,31 @@ class LogoutView(TemplateView):
 #   POST: Registra al usuario
 class SignupView(TemplateView):
     template = 'signup.html'
-    registered = False
 
     def get(self, request):
-        user_form = LoginForm()
-        profile_form = ProfileForm()
-        return render(request, self.template, {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+        form = RegisterForm()
+        return render(request, self.template, {'form': form})
 
     def post(self, request):
         if request.method == 'POST':
-            user_form = LoginForm(request.POST)
-            profile_form = ProfileForm(request.POST)
+            form = ProfileForm(request.POST)
 
-            if user_form.is_valid() and profile_form.is_valid():
-                user = user_form.save()
-                user.set_password(user.password)
-                user.save()
+            if form.is_valid():
+                usr = {
+                    'username': form.cleaned_data.get('username'),
+                    'password': form.cleaned_data.get('password'),
+                    'email': form.cleaned_data.get('email'),
+                    'firstname': form.cleaned_data.get('firstname'),
+                    'lastname': form.cleaned_data.get('lastname'),
+                    'birthdate': form.cleaned_data.get('birthdate'),
+                    'telnumber': form.cleaned_data.get('telnumber')
+                }
 
-                profile = profile_form.save(commit = False)
-                profile.user = user
-                profile.save()
+                db[usr['username']] = usr                
+                return HttpResponseRedirect('/perfil/login')
 
-                registered = True
+        return HttpResponseRedirect('/')
 
-            #else: print user_form.errors, profile_form.errors
-
-        return HttpResponseRedirect('/index/')
 
 
 #   Vista del perfil.
@@ -124,27 +185,7 @@ class ProfileView(TemplateView):
     template = 'profile.html'
 
     def get(self, request):
-        if context['currentuserstatus']['logged_in'] == True:
-            return render(request, self.template, context)
-        return render(request, 'main.html', context)
-        
-
-
-
-
-# Context // args
-context = {
-    'currentuser': {
-        'username': '-',
-        'password': '-',
-        'firstname': '-',
-        'lastname': '-',
-        'email': '-',
-        'telnumber': '-',
-        'birthdate': '-',
-    }, 
-    'currentuserstatus': {
-        'username': '-',
-        'logged_in': '-'
-    }
-}
+        if request.session['current_user']['loggedin'] == True:
+            return render(request, self.template, {})
+       
+        return HttpResponseRedirect('/')

@@ -7,85 +7,45 @@
 {% endblock %}
 
 {% block content %}
-<h3 align="center">Búsqueda por nombre:</h3>
-<form method="POST" align="center">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input class="btn btn-primary" type="submit" value="Search">
-</form>
-
+<h3 align="center">Búsqueda:</h3>
 <br><br>
-
-<h3 align="center">Búsqueda por ID:</h3>
 <form method="POST" align="center">
     {% csrf_token %}
     {{ form.as_p }}
-    <input class="btn btn-primary" type="submit" value="Search">
+    <input class="btn btn-primary" type="submit" value="Buscar">
 </form>
 
 <br><br><br>
 
+{% if message != "" %}
+<h3 align="center">{{ message }}</h3>
+{% endif %}
+
+{% if showdata %}
 <table align="center" class="table table-striped">
-        <thead>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>ID</th>
+            <th>Coordenadas</th>
+            <th>Tipo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for r in data %}
             <tr>
-                <th>Nombre</th>
-                <th>ID</th>
-                <th>Coordenadas</th>
-                <th>Tipo</th>
-                <th>Acciones</th>
+                <td>{{ r.name }}</td>
+                <td>{{ r.id }}</td>
+                <td>{{ r.location.coordinates }}</td>
+                <td>{{ r.location.type }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{% url 'edit' _id=r.id %}" role="button">Editar</a>
+                    <a class="btn btn-danger" href="{% url 'delete' _id=r.id %}" role="button">Borrar</a>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            {% for r in data %}
-                <tr>
-                    <td>{{ r.name }}</td>
-                    <td>{{ r.id }}</td>
-                    <td>{{ r.location.coordinates }}</td>
-                    <td>{{ r.location.type }}</td>
-                    <td>
-                        <a class="btn btn-danger" role="button">Borrar</a>
-                        <a class="btn btn-primary" role="button">Editar</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-<br><br><br>
-
-<h3 align="center">Update restaurant</h3>
-<form method="POST" align="center">
-    <input type="text" name="rest_name" placeholder="Name" value="{{ current_rest.name }}" required><br>
-    <input type="text" name="rest_ID" placeholder="ID" value="{{ current_rest.id }}" required readonly=True><br>
-    <input type="text" name="rest_coord" placeholder="Coordinates" value="{{ current_rest.coordinates }}" required><br>
-    <input type="text" name="rest_type" placeholder="Type" value="{{ current_rest.type }}" required><br>
-    <br>
-    <input class="btn btn-primary" type="submit" value="Update">
-</form>
-
-<br><br><br>
-
-<h3 align="center">Add restaurant</h3>
-<form method="POST" align="center">
-    <input type="text" name="add_name" placeholder="Name" required><br>
-    <input type="text" name="add_coord" placeholder="Coordinates" required><br>
-    <input type="text" name="add_type" placeholder="Type" required><br>
-    <br>
-    <input class="btn btn-primary" type="submit" value="Add">
-</form>
-
-<br><br><br>
-
-<h3 align="center">Delete restaurant...</h3>
-<form method="POST" align="center">
-    <h3 align="center">... by name</h3>
-    <input type="text" name="del_by_name" placeholder="Name" required>
-    <input class="btn btn-primary" type="submit" value="Delete">
-</form>
-<form method="POST" align="center">
-    <h3 align="center">... by ID</h3>
-    <input type="text" name=del_by_id placeholder="ID" required>
-    <input class="btn btn-primary" type="submit" value="Delete">
-</form>
-
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
 {% endblock %}

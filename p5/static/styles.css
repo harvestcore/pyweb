@@ -2,9 +2,6 @@
 body {
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
-    background-image:url('/static/images/fondo4.jpg');
-    background-repeat: repeat;
-    background-size: cover;
 }
 
 p {
@@ -297,3 +294,15 @@ a.article:hover {
     text-align: center;
 }
 
+/*******************************/
+.tablerest {
+    text-align: center;
+}
+
+.well p {
+    color: #000000;
+}
+
+.formularioxd {
+    text-align: center;
+}

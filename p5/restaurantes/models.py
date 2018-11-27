@@ -16,18 +16,23 @@ class Restaurantes:
             restaurantes.insert_one(jrow)
 
     def getByID(_id):
-        rest = restaurantes.find_one({"_id": ObjectId(_id)})
-        rst = []
-        rst.append({
-                'name': rest['name'],
-                'id': str(rest['_id']),
-                'location': rest['location']
-            })
-
-        return rst
+        r = restaurantes.find_one({"_id": ObjectId(_id)})
+        rest = {
+                'name': r['name'],
+                'id': str(r['_id']),
+                'location': r['location']
+            }
+        return rest
 
     def getByName(name):
-        return restaurantes.find_one({"name": name})
+        r = restaurantes.find_one({"name": name})
+        rest = {
+                'name': r['name'],
+                'id': str(r['_id']),
+                'location': r['location']
+            }
+
+        return rest
 
     def getListByName(name):
         rest = restaurantes.find({"name": { "$regex": ".*" + name + ".*" } })
@@ -39,6 +44,12 @@ class Restaurantes:
                 'id': str(r['_id']),
                 'location': r['location']
             })
+
+        return lst
+
+    def getListByID(_id):
+        lst = []
+        lst.append(Restaurantes.getByID(_id))
 
         return lst
 
@@ -57,7 +68,7 @@ class Restaurantes:
         
 
     def findAndUpdate(_id, update):
-        return restaurantes.find_one_and_update({'_id': ObjectId(_id)}, {'$set': update}, projection={'seq':True, '_id':False}, upsert = True)
+        return restaurantes.find_one_and_update({'_id': ObjectId(str(_id))}, {'$set': update}, projection={'seq':True, '_id':False}, upsert = True)
 
     def size():
         return restaurantes.count()
@@ -72,7 +83,7 @@ class Restaurantes:
         return restaurantes.delete_one({'name': name})
 
     def delByID(_id):
-        return restaurantes.delete_one({'_id': ObjectId(_id)})
+        return restaurantes.delete_one({'_id': ObjectId(str(_id))})
 
     def getIntervalo(min, max):
         datalist = []

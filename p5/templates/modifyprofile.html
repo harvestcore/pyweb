@@ -7,14 +7,38 @@
 {% endblock %}
 
 {% block content %}
+<h3 align="center">Datos personales</h3>
+
+<br>
+
+<table align="center" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Tel. number</th>
+            <th>Birth date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ current_user.username }}</td>
+            <td>{{ current_user.email }}</td>
+            <td>{{ current_user.firstname }}</td>
+            <td>{{ current_user.lastname }}</td>
+            <td>{{ current_user.birthdate }}</td>
+            <td>{{ current_user.telnumber }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
 <form method="POST" align="center">
-    <input type="text" name="username" placeholder="Username" value="{{ session['data']['username'] }}" required><br><br>
-    <input type="password" name="password" placeholder="Password" value="{{ session['data']['password'] }}" required><br><br>
-    <input type="text" name="firstname" placeholder="First name" value="{{ session['data']['firstname'] }}" required><br><br>
-    <input type="text" name="lastname" placeholder="Last name" value="{{ session['data']['lastname'] }}" required><br><br>
-    <input type="email" name="email" placeholder="Email" value="{{ session['data']['email'] }}" required><br><br>
-    <input type="tel" name="telnumber" placeholder="Telephone number" value="{{ session['data']['telnumber'] }}" required><br><br>
-    <input type="date" name="birthdate" placeholder="Birth date" value="{{ session['data']['birthdate'] }}" required><br><br>
+    {% csrf_token %}
+    {{ form.as_p }}
     <br>
     <input class="btn btn-primary" type="submit" value="Update!">
 </form>
