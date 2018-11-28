@@ -22,6 +22,7 @@ class Restaurantes:
                 'id': str(r['_id']),
                 'location': r['location']
             }
+            
         return rest
 
     def getByName(name):
@@ -35,7 +36,7 @@ class Restaurantes:
         return rest
 
     def getListByName(name):
-        rest = restaurantes.find({"name": { "$regex": ".*" + name + ".*" } })
+        rest = restaurantes.find({"name": { "$regex": ".*" + name + ".*", "$options": "-i" } })
         lst = []
 
         for r in rest:

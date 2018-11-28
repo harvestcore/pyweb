@@ -7,3 +7,17 @@
 </li>
 {% endif %}
 {% endfor %}
+
+
+
+list<pair<letra, numero>> v
+
+iterator a, b
+
+
+for a = v.begin, a != v.end, ++a
+    for b = v.begin, b != v.end, ++b
+        if a.second < b.second
+            aux = a
+            a = b
+            b = aux

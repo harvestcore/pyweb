@@ -37,9 +37,10 @@
             <tr>
                 <td>{{ r.name }}</td>
                 <td>{{ r.id }}</td>
-                <td>{{ r.location.coordinates }}</td>
+                <td>[{{ r.location.coordinates.1 }}, {{ r.location.coordinates.0 }}] </td>
                 <td>{{ r.location.type }}</td>
                 <td>
+                    <a class="btn btn-success" target="_blank" href="https://www.google.com/maps?q={{ r.location.coordinates.1 }},{{ r.location.coordinates.0 }}" role="button">Maps</a>
                     <a class="btn btn-primary" href="{% url 'edit' _id=r.id %}" role="button">Editar</a>
                     <a class="btn btn-danger" href="{% url 'delete' _id=r.id %}" role="button">Borrar</a>
                 </td>

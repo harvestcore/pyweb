@@ -8,22 +8,27 @@
 
 {% block content %}
 <h3 align="center">Eliminar restaurante</h3>
+<br>
+<table align="center" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>ID</th>
+            <th>Coordenadas</th>
+            <th>Tipo</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ current_rest.name }}</td>
+            <td>{{ current_rest.id }}</td>
+            <td>[{{ current_rest.location.coordinates.1 }}, {{ current_rest.location.coordinates.0 }}] </td>
+            <td>{{ current_rest.location.type }}</td>
+        </tr>
+    </tbody>
+</table>
 
-<div class="tablerest">
-    <div class="col-md-3">
-        <div class="well">
-            <h3><b>{{ current_rest.name }}</b></h3>
-            <hr>
-            <p>{{ current_rest.id }}</p>
-            <hr>
-            <p>{{ current_rest.location.coordinates }}</p>
-            <hr>
-            <p>{{ current_rest.location.type }}</p>
-            <hr>
-        </div>
-    </div>
-</div>
-
+<br><br>
 <h3 align="center">¿Estas seguro?</h3>
 <div align="center">
     <br>
