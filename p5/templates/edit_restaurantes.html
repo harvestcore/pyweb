@@ -25,7 +25,10 @@
             <td>{{ current_rest.id }}</td>
             <td>[{{ current_rest.location.coordinates.1 }}, {{ current_rest.location.coordinates.0 }}] </td>
             <td>{{ current_rest.location.type }}</td>
-            <td><a class="btn btn-primary" role="button" href="https://www.google.com/maps?q={{ current_rest.location.coordinates.1 }},{{ current_rest.location.coordinates.0 }}" target="_blank">Google Maps</a></td>
+            <td>
+                <a class="btn btn-success" role="button" href="https://www.google.com/maps?q={{ current_rest.location.coordinates.1 }},{{ current_rest.location.coordinates.0 }}" target="_blank">Google Maps</a>
+                <a class="btn btn-danger" href="{% url 'delete' _id=current_rest.id %}" role="button">Borrar</a>
+            </td>
         </tr>
     </tbody>
 </table>

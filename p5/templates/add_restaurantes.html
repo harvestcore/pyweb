@@ -7,28 +7,44 @@
 {% endblock %}
 
 {% block content %}
+{% if not added %}
 <h3 align="center">Agregar restaurante</h3>
+{% endif %}
 
 {% if added %}
 <h3 align="center">Se ha agregado:</h3>
-<div class="tablerest" align="center">
-    <div class="col-md-3" align="center">
-        <div class="well" align="center">
-            <h3><b>{{ current_rest.name }}</b></h3>
-            <hr>
-            <p>{{ current_rest.id }}</p>
-            <hr>
-            <p>[{{ current_rest.location.coordinates.1 }}, {{ current_rest.location.coordinates.0 }}] </p>
-            <hr>
-            <p>{{ current_rest.location.type }}</p>
-            <hr>
-        </div>
-    </div>
-</div>
+<table align="center" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>ID</th>
+            <th>Coordenadas</th>
+            <th>Tipo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ current_rest.name }}</td>
+            <td>{{ current_rest.id }}</td>
+            <td>[{{ current_rest.location.coordinates.1 }}, {{ current_rest.location.coordinates.0 }}] </td>
+            <td>{{ current_rest.location.type }}</td>
+            <td>
+                <a class="btn btn-success" target="_blank" href="https://www.google.com/maps?q={{ current_rest.location.coordinates.1 }},{{ current_rest.location.coordinates.0 }}" role="button">Maps</a>
+                <a class="btn btn-primary" href="{% url 'edit' _id=current_rest.id %}" role="button">Editar</a>
+                <a class="btn btn-danger" href="{% url 'delete' _id=current_rest.id %}" role="button">Borrar</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
 {% endif %}
 
 <br><br>
 
+{% if added %}
+<h3 align="center">Agregar otro:</h3>
+<br>
+{% endif %}
 <div class="formularioxd">
     <form method="POST">
         {% csrf_token %}
