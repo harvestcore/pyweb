@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Restaurantes{% endblock %}
+
+{% block contentheader %}
+<h2>Eliminar restaurante</h2>
+{% endblock %}
+
+{% block content %}
+<table align="center" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>ID</th>
+            <th>Coordenadas</th>
+            <th>Tipo</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ current_rest.name }}</td>
+            <td>{{ current_rest.id }}</td>
+            <td>[{{ current_rest.location.coordinates.1 }}, {{ current_rest.location.coordinates.0 }}] </td>
+            <td>{{ current_rest.location.type }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<br><br>
+<h3 align="center">¿Estas seguro?</h3>
+<div align="center">
+    <br>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input class="btn btn-danger" type="submit" value="Eliminar">
+    </form>
+    <br>
+    <a class="btn btn-primary" href="{% url 'restaurantes' %}" role="button">Volver</a>
+</div>
+{% endblock %}

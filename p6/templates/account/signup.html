@@ -1,0 +1,27 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% endblock %}
+
+{% block title %}Sign up{% endblock %}
+
+{% block contentheader %}
+<h2>Sign up</h2>
+{% endblock %}
+
+{% block content %}
+
+<div class="accform">  
+    <p>¿Ya tienes cuenta? Entonces logueate <a href="{{ login_url }}">aquí</a>.</p>
+    <form id="signup_form" method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if redirect_field_value %}
+        <input class="form-control" type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <button class="btn btn-success" type="submit">Regístrate!</button>
+    </form>
+</div>
+  
+{% endblock %}

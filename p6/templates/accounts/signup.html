@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Sign up{% endblock %}
+
+{% block contentheader %}
+<h2>Sign up</h2>
+{% endblock %}
+
+{% block content %}
+<form method="POST" align="center">
+    {% csrf_token %}
+    <input type="text" name="username" placeholder="Username" required><br><br>
+    <input type="password" name="password" placeholder="Password" required><br><br>
+    <input type="text" name="firstname" placeholder="First name" required><br><br>
+    <input type="text" name="lastname" placeholder="Last name" required><br><br>
+    <input type="email" name="email" placeholder="Email" required><br><br>
+    <input type="tel" name="telnumber" placeholder="Telephone number" required><br><br>
+    <input type="date" name="birthdate" placeholder="Birth date" required><br><br>
+    <br>
+    <input class="button1" type="submit" value="Sign up!">
+</form>
+{% endblock %}
+
+
+
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}Sign up{% endblock %}
+
+{% block contentheader %}
+<h2>Sign up</h2>
+{% endblock %}
+
+{% block content %}
+
+<div class="accform">
+    <p>¿Ya tienes cuenta? ¡Logueate <a href="{% url 'login' %}">aquí</a>!</p>
+
+    
+    
+    <form class="signup" id="signup_form" method="post" action="{% url 'signup' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <button type="submit">{% trans "Sign Up" %} &raquo;</button>
+    </form>
+</div>
+
+{% endblock %}

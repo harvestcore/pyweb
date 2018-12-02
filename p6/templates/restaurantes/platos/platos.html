@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Platos{% endblock %}
+
+{% block contentheader %}
+<h2>Platos</h2>
+{% endblock %}
+
+{% block content %}
+<h3 align="center">Listado de platos:</h3>
+
+<br><br>
+
+<table align="center" class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Chef</th>
+            <th>Tipo cocina</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in platos %}
+            <tr>
+                <td>{{ p.id }}</td>
+                <td>{{ p.nombre }}</td>
+                <td>{{ p.chef }}</td>
+                <td>{{ p.tipoCocina }}</td>
+                <td>{{ p.precio }} €</td>
+                <td>
+                    <a class="btn btn-success" href="{% url 'seeplato' id_=p.id %}" role="button">Ver plato</a>
+                    <a class="btn btn-primary" href="{% url 'editplato' id_=p.id %}" role="button">Editar</a>
+                    <a class="btn btn-danger" href="{% url 'deleteplato' id_=p.id %}" role="button">Eliminar</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

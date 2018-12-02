@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block title %}Login{% endblock %}
+
+{% block contentheader %}
+<h2>Log in</h2>
+{% endblock %}
+
+{% block content %}
+
+{% get_providers as socialaccount_providers %}
+
+{% if socialaccount_providers %}
+
+<div class="accform">
+    <p>Si aún no tienes una cuenta puedes obtener una regístrandote <a href="{% url 'usersignup' %}">aquí</a> o usando una de las siguientes aplicaciones:</p>
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+    
+    {% include "socialaccount/snippets/login_extra.html" %}
+    
+    {% else %}
+    <p>If you have not created an account yet, then please <a href="{% url 'usersignup' %}">sign up</a> first.</p>
+    {% endif %}
+    
+    <br>
+    <form class="login" method="POST" action="{% url 'userlogin' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <button class="btn btn-success" type="submit">Log in!</button>
+        <br><br>
+        <a class="btn btn-warning" href="{% url 'account_reset_password' %}">¿Has olvidado la contraseña?</a>
+    </form>
+</div>
+{% endblock %}

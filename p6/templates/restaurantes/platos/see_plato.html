@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Platos{% endblock %}
+
+{% block contentheader %}
+<h2>Plato</h2>
+{% endblock %}
+
+{% block content %}
+<div class="formularioxd">
+    <div class="resume">
+        <header class="page-header">
+            <h1 class="page-title">{{ plato.nombre }}</h1>
+        </header>
+    </div>
+    <br>
+    <table class="table formxd" style="width:400px">
+        <tbody>
+            <tr>
+                <td><i class="fa fa-id-card"></i> {{ plato.id }}</td>
+            </tr>
+            <tr>
+                <td><i class="fa fa-user"></i> {{ plato.chef }}</td>
+            </tr>
+            <tr>
+                <td><i class="fa fa-euro-sign"></i> {{ plato.precio }}</td>
+            </tr>
+            <tr>
+                <td><i class="fa fa-utensils"></i> {{ plato.tipoCocina }}</td>
+            </tr>
+            <tr>
+                <td><i class="fa fa-exclamation"></i> {{ plato.alergenos }}</td>
+            </tr>
+            <tr>
+                <td><i class="fa fa-lemon"></i> {{ plato.ingredientes }}</td>
+            </tr>
+            <tr>
+                <td><i class="fa fa-dolly"></i> {{ plato.descripccion }}</td>
+            </tr>
+            <tr><td></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<br><br>
+    
+<div class="formularioxd">
+    <a class="btn btn-success" href="{% url 'editplato' id_=plato.id %}" role="button">Editar</a>
+    <a class="btn btn-primary" href="{% url 'platos' %}" role="button">Volver</a>
+</div>
+    
+{% endblock %}
