@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Restaurantes{% endblock %}
+
+{% block contentheader %}
+<h2>Editar restaurante</h2>
+{% endblock %}
+
+{% block content %}
+<div align="right">
+    <button class="btn btn-info" id="changetable">Estilo tabla</button>
+</div>
+<br>
+<table align="center" class="table table-striped" id="estilotabla">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>ID</th>
+            <th>Coordenadas</th>
+            <th>Tipo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ current_rest.name }}</td>
+            <td>{{ current_rest.id }}</td>
+            <td>[{{ current_rest.location.coordinates.1 }}, {{ current_rest.location.coordinates.0 }}] </td>
+            <td>{{ current_rest.location.type }}</td>
+            <td>
+                <a class="btn btn-success" role="button" href="https://www.google.com/maps?q={{ current_rest.location.coordinates.1 }},{{ current_rest.location.coordinates.0 }}" target="_blank">Google Maps</a>
+                <a class="btn btn-danger" href="{% url 'delete' _id=current_rest.id %}" role="button">Borrar</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br><br><br>
+<h3 align="center">Nuevos datos:</h3>
+<br>
+<div class="formularioxd">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input class="btn btn-primary" type="submit" value="Actualizar">
+    </form>
+    <br>
+    <a class="btn btn-primary" href="{% url 'restaurantes' %}" role="button">Volver</a>
+</div>
+    
+{% endblock %}

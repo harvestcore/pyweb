@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Restaurantes{% endblock %}
+
+{% block contentheader %}
+<h2>Restaurantes</h2>
+{% endblock %}
+
+{% block content %}
+
+<h3 align="center">Búsqueda:</h3>
+<br><br>
+<form method="POST" align="center">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input class="btn btn-primary" type="submit" value="Buscar">
+</form>
+
+<br><br><br>
+
+{% if message != "" %}
+<h3 align="center">{{ message }}</h3>
+{% endif %}
+
+{% if showdata %}
+<div style="clear: both;">
+    <input class="alignleft form-control" id="entradaFiltroRest" type="text" placeholder="Filtro..." style="width:100px;">
+    
+    <select name="state" id="selectorpaginadorrest" class="form-control width100 alignleft" style="width:100px;">
+        <option value="0">Todos</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="500">500</option>
+        <option value="1000">1000</option>
+    </select>
+
+    
+    <button id="next-btn" class="btn btn-warning alignright">Next</button>
+    <button id="prev-btn" class="btn btn-warning alignright">Prev</button>
+    <input class="alignleft form-control" id="entradaNumPag" type="text" placeholder="Nº pag..." style="width:100px;">
+    <p class="pagevalue alignleft" id="ajaxPageNumber"></p>
+</div>
+
+<br><br>
+
+<table align="center" class="table table-striped" id="tablaAjax">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>ID</th>
+            <th>Coordenadas</th>
+            <th>Tipo</th>
+        </tr>
+    </thead>
+    <tbody id="restFetchedContent">
+    </tbody>
+</table>
+
+{% endif %}
+{% endblock %}

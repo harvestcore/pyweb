@@ -1,0 +1,511 @@
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+body {
+    font-family: 'Poppins', sans-serif;
+    /*background: #6699ff;*/
+    background-color: #6699ff;
+}
+
+p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #fff;
+}
+
+a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.navbar {
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #fff;
+    margin: 40px 0;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: rgb(90, 90, 90);
+    color: #fff;
+    transition: all 0.3s;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #3b3b3b;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #000000;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+    color: #fff;
+}
+
+#sidebar ul li a:hover {
+    color: rgb(0, 0, 0);
+    background: #fff;
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: #fff;
+    background: #3b3b3b;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #2e2e2e;
+}
+
+ul.CTAs {
+    padding: 20px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+a.download {
+    background: #fff;
+    color: rgb(0, 0, 0);
+}
+
+a.article,
+a.article:hover {
+    background: #000000 !important;
+    color: #fff !important;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content {
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #sidebarCollapse span {
+        display: none;
+    }
+}
+
+
+
+
+
+
+
+/****************************************
+            HABILIDADES
+****************************************/
+* {box-sizing: border-box}
+
+.habprog {
+  width: 45%;
+  background-color: #ddd;
+  margin: 0 auto;
+}
+
+.skills {
+  text-align: right;
+  padding: 10px;
+  color: rgb(0, 0, 0);
+}
+
+.cpp {width: 90%; background-color: #6666ff;}
+.java {width: 85%; background-color: #00a500;}
+.python {width: 75%; background-color: #ff3300;}
+.sql {width: 70%; background-color: #808080;}
+.php {width: 50%; background-color: #ff61d8;}
+.html {width: 50%; background-color: #ffff4d;}
+.css {width: 50%; background-color: #ff8800;}
+
+
+
+/****************************************
+            LOGO
+****************************************/
+.logo {
+    position: relative;
+    transform: scale(0.88, 0.88);
+    left: -20px;
+}
+
+
+/****************************************
+            REPOSITORIOS
+****************************************/
+#repo {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 500px;
+    font-size: 13px;
+}
+
+#repo td {
+    padding-top: 7px;
+    padding-left: 10px;
+    padding-bottom: 7px;
+    background-color: #f2f2f2;
+    border: 1px solid white;
+    white-space: pre;
+}
+
+#repo tr:hover {
+    background-color: #ddd;
+}
+
+#repo th {
+    padding-top: 8px;
+    padding-left: 10px;
+    padding-bottom: 8px;
+    text-align: left;
+    background-color: #4C5AAF;
+    border: 1px solid white;
+    color: white;
+    width: 90%;
+}
+
+#repo .rlink {
+    text-align: right;
+    padding-right: 10px;
+    width: 10%;
+}
+
+/****************************************
+            Perfil
+****************************************/
+#profile {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: auto;
+    font-size: 13px;
+    text-align: center;
+}
+
+#profile td {
+    padding: 8px;
+    border-radius: 7px;
+}
+
+#profile tr:hover {
+    background-color: rgb(165, 165, 165);
+}
+
+#profile tr {
+    background-color: rgb(221, 221, 221);
+}
+
+#profile th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+/****************************************
+            FOOTER
+****************************************/
+.footer {
+    position: relative;
+    width: 100%;
+    height: auto;
+    bottom: 0;
+    padding-top: 2px;
+    background-color: rgb(90, 90, 90);
+    text-align: center;
+}
+
+/*******************************/
+.tablerest {
+    text-align: center;
+}
+
+.well p {
+    color: #000000;
+}
+
+.formularioxd {
+    text-align: center;
+}
+
+.formxd {
+    margin: 0 auto;
+}
+
+
+/*////////////////////////////////////////////////////////////////////////////////*/
+.bs-callout {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #eee;
+    border-image: none;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px 1px 1px 5px;
+    margin-bottom: 5px;
+    padding: 20px;
+}
+.bs-callout:last-child {
+    margin-bottom: 0px;
+}
+.bs-callout h4 {
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+.bs-callout-danger {
+    border-left-color: #d9534f;
+}
+
+.bs-callout-danger h4{
+    color: #d9534f;
+}
+
+.resume .list-group-item:first-child, .resume .list-group-item:last-child{
+  border-radius:0;
+}
+
+/*makes an anchor inactive(not clickable)*/
+.inactive-link {
+   pointer-events: none;
+   cursor: default;
+}
+
+.resume-heading .social-btns{
+  margin-top:15px;
+}
+.resume-heading .social-btns i.fa{
+  margin-left:-5px;
+}
+
+@media (max-width: 992px) {
+  .resume-heading .social-btn-holder{
+    padding:5px;
+  }
+}
+
+
+/* skill meter in resume. copy pasted from http://bootsnipp.com/snippets/featured/progress-bar-meter */
+
+.progress-bar {
+    text-align: left;
+	white-space: nowrap;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	cursor: pointer;
+}
+
+.progress-bar > .progress-type {
+	padding-left: 10px;
+}
+
+.progress-meter {
+	min-height: 15px;
+	border-bottom: 2px solid rgb(160, 160, 160);
+  margin-bottom: 15px;
+}
+
+.progress-meter > .meter {
+	position: relative;
+	float: left;
+	min-height: 15px;
+	border-width: 0px;
+	border-style: solid;
+	border-color: rgb(160, 160, 160);
+}
+
+.progress-meter > .meter-left {
+	border-left-width: 2px;
+}
+
+.progress-meter > .meter-right {
+	float: right;
+	border-right-width: 2px;
+}
+
+.progress-meter > .meter-right:last-child {
+	border-left-width: 2px;
+}
+
+.progress-meter > .meter > .meter-text {
+	position: absolute;
+	display: inline-block;
+	bottom: -20px;
+	width: 100%;
+	font-weight: 700;
+	font-size: 0.85em;
+	color: rgb(160, 160, 160);
+	text-align: left;
+}
+
+.progress-meter > .meter.meter-right > .meter-text {
+	text-align: right;
+}
+
+
+
+
+.accform {
+    color: #000000;
+    align-content: center;
+    text-align: center;
+}
+
+.accform p {
+    color: #000000;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.accform ul {
+    margin-left: 0 auto;
+}
+
+
+
+
+/************** panel de contacto **************/
+#panelcontacto {
+    padding: 5px;
+    text-align: center;
+    background-color: #ceedff;
+    border: solid 1px #c3c3c3;
+    padding: 50px;
+    display: none;
+}
+
+.alignleft {
+	float: left;
+}
+.alignright {
+	float: right;
+}
+
+.width100 {
+    width: 100px;
+}
+
+
+
+/****************** deslizador *******************/
+.slidecontainer {
+    width: 100%;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;   
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%; 
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+.pagevalue {
+    color: #000000;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}

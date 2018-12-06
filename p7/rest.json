@@ -1,0 +1,8 @@
+{
+    '_id': ObjectId('55cba2476c522cafdb053add'),
+    'location': {
+        'coordinates': [-73.856077, 40.848447],
+        'type': 'Point'
+    },
+    'name': 'Morris Park Bake Shop'
+}

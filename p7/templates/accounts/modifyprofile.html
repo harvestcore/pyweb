@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Panel de control{% endblock %}
+
+{% block contentheader %}
+<h2>Panel de control</h2>
+{% endblock %}
+
+{% block content %}
+<h3 align="center">Datos personales</h3>
+
+<br>
+
+<table align="center" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Tel. number</th>
+            <th>Birth date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ current_user.username }}</td>
+            <td>{{ current_user.email }}</td>
+            <td>{{ current_user.firstname }}</td>
+            <td>{{ current_user.lastname }}</td>
+            <td>{{ current_user.birthdate }}</td>
+            <td>{{ current_user.telnumber }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<form method="POST" align="center">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <br>
+    <input class="btn btn-primary" type="submit" value="Update!">
+</form>
+{% endblock %}

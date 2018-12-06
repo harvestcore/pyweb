@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Platos{% endblock %}
+
+{% block contentheader %}
+<h2>Agregar plato</h2>
+{% endblock %}
+
+{% block content %}
+{% if added %}
+<br>
+<h3 align="center">Plato agregado correctamente.</h3>
+<br>
+{% endif %}
+
+{% if error != '-' %}
+<br>
+<h3 align="center">Error: {{ error }}</h3>
+<br>
+{% endif %}
+
+<br><br>
+
+<div class="formularioxd">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_ul }}
+        <input class="btn btn-primary" type="submit" value="Agregar plato">
+    </form>
+</div>
+    
+{% endblock %}

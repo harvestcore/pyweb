@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Restaurantes{% endblock %}
+
+{% block contentheader %}
+<h2>Restaurantes</h2>
+{% endblock %}
+
+{% block content %}
+
+<h3 align="center">Búsqueda:</h3>
+<br><br>
+<form method="POST" align="center">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input class="btn btn-primary" type="submit" value="Buscar">
+</form>
+
+<br><br><br>
+
+{% if message != "" %}
+<h3 align="center">{{ message }}</h3>
+{% endif %}
+
+{% if showdata %}
+<div style="clear: both;">
+    <button class="btn btn-info alignright" id="changetable">Estilo tabla</button>
+    <input class="alignleft form-control" id="entradaFiltroRest" type="text" placeholder="Filtro..." style="width:100px;">
+</div>
+
+<br><br>
+
+<select name="state" id="selectorpaginadorrest" class="form-control width100" style="width:100px;">
+    <option value="5000">Todos</option>
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="25">25</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+    <option value="500">500</option>
+    <option value="1000">1000</option>
+</select>
+
+<br>
+
+<table align="center" class="table table-striped" id="tablarestaurantes">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>ID</th>
+            <th>Coordenadas</th>
+            <!--<th>Tipo</th>-->
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for r in data %}
+            <tr>
+                <td>{{ r.name }}</td>
+                <td>{{ r.id }}</td>
+                <td>[{{ r.location.coordinates.1 }}, {{ r.location.coordinates.0 }}] </td>
+                <!--<td>{{ r.location.type }}</td>-->
+                <td>
+                    <a class="btn btn-success" target="_blank" href="https://www.google.com/maps?q={{ r.location.coordinates.1 }},{{ r.location.coordinates.0 }}" role="button">Maps</a>
+                    <a class="btn btn-primary" href="{% url 'edit' _id=r.id %}" role="button">Editar</a>
+                    <a class="btn btn-danger" href="{% url 'delete' _id=r.id %}" role="button">Borrar</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="pagination-container">
+    <div class="slidecontainer" id="paginadorRest">
+    </div>
+</div>
+{% endif %}
+{% endblock %}
