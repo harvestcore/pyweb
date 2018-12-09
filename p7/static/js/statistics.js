@@ -21,6 +21,11 @@ $(document).ready(function() {
                             'amount': data.success.amount
                         })
                     }
+                },
+                failure: function(jqXHR, textStatus, errorThrown) { 
+                    console.log(jqXHR)
+                    console.log(textStatus)
+                    console.log(errorThrown)
                 }
             });
         }
