@@ -55,12 +55,18 @@ class PlatoEditView(TemplateView):
 
         plato = Plato.objects.get(id=id_)
         form = PlatoForm(request.POST, instance = plato)
-        form.save()
 
-        plato = Plato.objects.get(id=id_)
-        form = PlatoForm(instance = plato)
+        if form.is_valid():
+            form.save()
 
-        return render(request, self.template, {'plato': plato, 'form': form, 'error': error})
+            plato = Plato.objects.get(id=id_)
+            form = PlatoForm(instance = plato)
+
+            return render(request, self.template, {'plato': plato, 'form': form, 'error': error})
+        else:
+            plato2 = Plato.objects.get(id=id_)
+            form2 = PlatoForm(instance = plato)
+            return render(request, self.template, {'plato': plato2, 'form': form2, 'added': False, 'error': form.errors})
 
 class PlatoDeleteView(TemplateView):
     template = 'restaurantes/platos/delete_plato.html'
