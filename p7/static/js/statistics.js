@@ -1,25 +1,25 @@
 $(document).ready(function() {
     /**
      * 
-     *  Estadísticas 
+     *  Estadísticas restaurantes de comida rápida
      * 
      */
     $(function() {
-        var fastFood = new Array('McDonald\'s', 'Burger King', 'Subway', 'Pizza Hut', 'Wendy\'s', 'KFC', 'Taco Bell', 'Domino\'s Pizza', 'Dunkin Donuts', 'Starbucks', 'Chipotle');
-        var restData = new Array();
+        var fastFood = ['McDonald\'s', 'Burger King', 'Subway', 'Pizza Hut', 'Wendy\'s', 'KFC', 'Taco Bell', 'Domino\'s Pizza', 'Dunkin Donuts', 'Starbucks', 'Chipotle'];
+        var restName = new Array();
+        var restAmount = new Array();
+        var restData= new Array();
 
-        function getRestData(rest) {
-            // console.log("http://localhost:8080/restaurantes/stat/" + rest)
+        function rData(name) {
             $.ajax({
+                async: false,
                 type: "GET",
-                url: "http://localhost:8080/restaurantes/stat/" + rest,
+                url: "/restaurantes/stat/" + name,
                 success: function(data) {
                     if (data.success) {
-                        console.log(data.success.amount + " - " + data.success.name)
-                        restData.push({
-                            'name': data.success.name,
-                            'amount': data.success.amount
-                        })
+                        restAmount.push(data.success.amount);
+                        restName.push(data.success.name);
+                        restData.push(data.success);
                     }
                 },
                 failure: function(jqXHR, textStatus, errorThrown) { 
@@ -30,29 +30,68 @@ $(document).ready(function() {
             });
         }
         
-        for (var i = 0; i < fastFood.length; i++) {
-            getRestData(fastFood[i])
+        function getRestData() {
+            for (var i = 0; i < fastFood.length; i++) {
+                rData(fastFood[i]);
+            }                  
         }
 
-        console.log(restData[2])
-        console.log(fastFood)
+        $.when( getRestData() ).then( function() {    
+            $('#fastFoodTable').highcharts({
+                chart: {
+                    type: 'bar'
+                },
+                title: {
+                    text: 'Número de establecimientos de comida rápida'
+                },
+                xAxis: {
+                    categories: restName
+                },
+                yAxis: {
+                },
+                series: [{
+                    name: "Nº establecimientos",
+                    data: restAmount
+                }],
+            });
 
-        $('#fastFoodStat').highcharts({
-            chart: {
-                type: 'bar'
-              },
-            title: {
-              text: 'Establecimientos de comida rápida'
-            },
-            xAxis: {
-              categories: fastFood
-            },
-            yAxis: {
-            },
-            series: [{
-                name: "Nº establecimientos",
-              data: restData
-            }],
+            var pValue = []
+
+            for (var i = 0; i < restData.length; i++) {
+                pValue.push({
+                    'name': restData[i].name,
+                    'y': restData[i].percentage
+                });
+            }
+
+            $('#fastFoodPie').highcharts({
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Porcentaje de establecimientos de comida rápida'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.percentage:.1f} %',
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'Porcentaje global',
+                    colorByPoint: true,
+                    data: pValue
+                }]
+            });
+
         });
     });
 });

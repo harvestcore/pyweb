@@ -6,6 +6,7 @@ from .views import *
 urlpatterns = [
   url(r'^$', RestBusquedaView.as_view(), name='restaurantes'),
   url(r'^edit/(?P<_id>[\w-]+)', RestEditView.as_view(), name='edit'),
+  url(r'^rest/(?P<_id>[\w-]+)', RestSeeView.as_view(), name='seerest'),
   url(r'^delete/(?P<_id>[\w-]+)', RestDeleteView.as_view(), name='delete'),
   url(r'^add/', RestAddView.as_view(), name='add'),
   url(r'^addplato/', PlatoAddView.as_view(), name='addplato'),
@@ -19,4 +20,7 @@ urlpatterns = [
 
   url(r'^statistics/', StatisticView.as_view(), name='statistics'),
   url(r'^stat/(?P<name>[\w-]+)', views.restStat, name='stat'),
+  url(r'^singlerest/(?P<idd>[\w-]+)', views.getRestaurante, name='singlerest'),
+  
+  url(r'^rutero/', RuteroView.as_view(), name='rutero'),
 ]

@@ -89,39 +89,6 @@ $(document).ready(function() {
                 $('.slidecontainer').append('<p class="pagevalue">Página: <span id="sliderValue">1</span> / ' + pagenum + '</p>').show()
             }
         }
-        
-        /*
-        $('.pagination').html('');
-        $('.pagination li:first-child').addClass('active');
-        $('.pagination li').on('click', function() {
-            var pagenum = $(this).attr('data-page');
-            var trindex = 0;
-            $('.pagination li').removeClass('active');
-            $(this).addClass('active')
-            $(table + ' tr:gt(0)').each(function() {
-                trindex++;
-                if (trindex > (maxrows * pagenum) || trindex <= ((maxrows * pagenum) - maxrows))
-                    $(this).hide()
-                else
-                    $(this).show()
-            });
-
-            var tohide = parseInt(pagenum) - 4;
-            var toshow = parseInt(pagenum) + 4;
-            var mrows = Math.ceil(totalrows / maxrows);
-            console.log(
-                "pagenum: " + pagenum +
-                "\nhide: " + tohide +
-                "\nshow: " + toshow +
-                "\nrows: " + mrows
-            );
-
-            $('.pagination li:eq(' + (parseInt(pagenum) - 1) + ')').show();
-
-            if (toshow > (parseInt(pagenum) + 4 ))
-                $('.pagination li:eq(' + toshow + ')').show();
-            });
-           */
     });
 
     // Cada vez que se cambia el deslizador muestra la página a la que corresponde y cambia el valor de la página
@@ -132,6 +99,7 @@ $(document).ready(function() {
         var maxrows = selectorpaginador.value;
         var pagenum = slider.value;
         var trindex = 0;
+        
         $('#tablarestaurantes tr:gt(0)').each(function() {
             trindex++;
             if (trindex > (maxrows * pagenum) || trindex <= ((maxrows * pagenum) - maxrows))
@@ -160,14 +128,7 @@ $(document).ready(function() {
 
     // Paginador JQuery + AJAX
     $(function() {
-        var page = 0, pagelimit = 10, totalelements = 0, name="a";
-
-        /*
-        $('#ajaxSearchForm').on('submit', function() {
-            name = $('#ajaxSearchName').val()
-            console.log($('#ajaxSearchName').val())
-        });
-        */
+        var page = 0, pagelimit = 10, totalelements = 0;
 
         // Muestro datos por defecto (una página de 10 elementos)
         showData();
@@ -211,15 +172,13 @@ $(document).ready(function() {
             }
         });
         
+        
         // Función para mostrar los datos
         function showData (datos) {
             $.ajax({
-                //url: "{% url 'intervalodatos' ini=" + (page * pagelimit) + ", cantidad=" + pagelimit + ", nombre=bar %}",
-                url: "http://localhost:8080/restaurantes/intervalodatos/" + (page*pagelimit) + "/" + pagelimit + "/" + String(name),
+                url: "/restaurantes/intervalodatos/" + (page*pagelimit) + "/" + pagelimit + "/" + String(restname),
                 type: "GET",
                 success: function(data) {
-                    // console.log("http://localhost:8080/restaurantes/intervalodatos/" + (page*pagelimit) + "/" + pagelimit + "/bar")
-                    // console.log(data);
                     if (data.success) {
                         var dataArray = data.success.data;
                         var html = "";
@@ -236,7 +195,6 @@ $(document).ready(function() {
                                     '</tr>'
                         }
                         
-                        //$('#ajaxPageNumber').html('<span>Página: ' + page + ' / ' + int(totalelements/pagelimit) + '</span>')
                         $('#restFetchedContent').html(html)
                     }
                 },

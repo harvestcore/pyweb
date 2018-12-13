@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Rutero{% endblock %}
+
+{% block contentheader %}
+<h2>Rutero</h2>
+{% endblock %}
+
+{% block content %}
+
+<script type="text/javascript">
+    var idtoadd;
+    var idtodel;
+
+    function setIDtoAdd(id) {
+        idtoadd = id;
+    }
+
+    function setIDtoDel(id) {
+        idtodel = id;
+    }
+</script>
+
+<div style="width: 100%; overflow: hidden;">
+    <div style="width: 35%; float: left; text-align: center;">
+        <h2>Búsqueda</h2>
+        <br>
+        
+        <input class="alignleft form-control" id="entradarutero" type="text" placeholder="Restaurante..." style="width:200px;">
+        <button class="btn btn-info alignright" id="buscarrutero">Buscar</button>
+        
+        <br><br>
+        <input class="alignleft form-control" id="entrada-filtro-rutero" type="text" placeholder="Filtro..." style="width:200px;">
+        <button class="btn btn-danger alignright" id="eliminarrutero">Eliminar ruta</button>
+
+        <br><br>
+
+        <table align="center" class="table table-striped" id="tablaAjax">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>ID</th>
+                    <th>+</th>
+                </tr>
+            </thead>
+            <tbody id="ruterosearchtable">
+            </tbody>
+        </table>
+    
+    </div>
+    
+    <div style="margin-left: 35.5%; text-align: center;">
+        <h2>Mapa</h2>
+        <br>
+
+        <div class="mapOSM" id="ruteromap"></div>
+
+        <br><br>
+        <h2>Ruta actual</h2>
+        <table align="center" class="table table-striped" id="tablaAjax">
+            <thead>
+                <tr>
+                    <th>Nº</th>
+                    <th>Nombre</th>
+                    <th>ID</th>
+                    <th>Coordenadas</th>
+                    <th>-</th>
+                </tr>
+            </thead>
+            <tbody id="rutaactualxd">
+            </tbody>
+        </table>
+        <br><br><br>
+    </div>
+</div>
+
+{% endblock %}

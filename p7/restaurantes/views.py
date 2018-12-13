@@ -56,12 +56,18 @@ class PlatoEditView(TemplateView):
 
         plato = Plato.objects.get(id=id_)
         form = PlatoForm(request.POST, instance = plato)
-        form.save()
 
-        plato = Plato.objects.get(id=id_)
-        form = PlatoForm(instance = plato)
+        if form.is_valid():
+            form.save()
 
-        return render(request, self.template, {'plato': plato, 'form': form, 'error': error})
+            plato = Plato.objects.get(id=id_)
+            form = PlatoForm(instance = plato)
+
+            return render(request, self.template, {'plato': plato, 'form': form, 'error': error})
+        else:
+            plato2 = Plato.objects.get(id=id_)
+            form2 = PlatoForm(instance = plato)
+            return render(request, self.template, {'plato': plato2, 'form': form2, 'added': False, 'error': form.errors})
 
 class PlatoDeleteView(TemplateView):
     template = 'restaurantes/platos/delete_plato.html'
@@ -153,6 +159,18 @@ class RestEditView(TemplateView):
 
         return HttpResponseRedirect('/restaurantes/')
         
+
+class RestSeeView(TemplateView):
+    template = 'restaurantes/see_restaurante.html'
+
+    def get(self, request, _id = ""):
+        if request.method == 'GET':
+            rest = Restaurantes.getByID(str(_id))
+
+            return render(request, self.template, {'current_rest': rest})
+        
+        return HttpResponseRedirect('/restaurantes/')
+
 class RestDeleteView(TemplateView):
     template = 'restaurantes/delete_restaurantes.html'
 
@@ -226,12 +244,12 @@ class RestBusqueda2View(TemplateView):
                     return HttpResponseRedirect('/restaurantes/r2/')
 
                 if type(rest) is not list:
-                        return render(request, self.template, {'form':blancform, 'data':[], 'showdata': False, 'message': 'No se ha encontrado ningún restaurante.'})
+                        return render(request, self.template, {'form':blancform, 'data':[], 'restname': name,'showdata': False, 'message': 'No se ha encontrado ningún restaurante.'})
                 
                 if len(rest) == 0:
-                    return render(request, self.template, {'form':blancform, 'data':[], 'showdata': False, 'message': 'No se ha encontrado ningún restaurante.'})
+                    return render(request, self.template, {'form':blancform, 'data':[], 'restname': name, 'showdata': False, 'message': 'No se ha encontrado ningún restaurante.'})
 
-                return render(request, self.template, {'form':blancform, 'data':rest, 'showdata': True, 'message': ''})
+                return render(request, self.template, {'form':blancform, 'data':rest, 'restname': name, 'showdata': True, 'message': ''})
 
             else:
                 return HttpResponseRedirect('/restaurantes/r2/')
@@ -264,7 +282,7 @@ class StatisticView(TemplateView):
         return render(request, self.template, {})
 
 
-def restStat(request, name=""):
+def restStat(request, name):
     if request.method == 'GET':
         rest = Restaurantes.getListByName(str(name))
         allrest = Restaurantes.size()
@@ -281,3 +299,16 @@ def restStat(request, name=""):
         return JsonResponse({'success': data}, safe=False)
 
     return JsonResponse({'error': 'Error fetching data.'}, safe=False)
+
+def getRestaurante(request, idd):
+    if request.method == 'GET':
+        rest = Restaurantes.getByID(str(idd))
+
+        return JsonResponse({'success': rest}, safe=False)
+
+    return JsonResponse({'error': 'Error fetching data.'}, safe=False)
+
+class RuteroView(TemplateView):
+    template = 'restaurantes/rutero.html'
+    def get(self, request):
+        return render(request, self.template, {})

@@ -8,6 +8,10 @@
 
 {% block content %}
 
+<script type="text/javascript">
+    var restname = "{{ restname }}";
+</script>
+
 <h3 align="center">Búsqueda:</h3>
 <br><br>
 <form method="POST" align="center">
@@ -24,8 +28,6 @@
 
 {% if showdata %}
 <div style="clear: both;">
-    <input class="alignleft form-control" id="entradaFiltroRest" type="text" placeholder="Filtro..." style="width:100px;">
-    
     <select name="state" id="selectorpaginadorrest" class="form-control width100 alignleft" style="width:100px;">
         <option value="0">Todos</option>
         <option value="5">5</option>

@@ -509,3 +509,14 @@ a.article:hover {
     color: #000000;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+
+
+/**
+
+    MAPAS
+
+**/
+.mapOSM {
+    height: 600px;
+    width: auto;
+}
