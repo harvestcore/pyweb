@@ -115,17 +115,7 @@ $(document).ready(function() {
         }
     });
 
-    // Agrega columna con el número de elemento
-    $(function() {
-        $('#tablarestaurantes table tr:eq(0)').prepend('<th>Nº</th>');
-        var id = 0;
-        $('#tablarestaurantes table tr:gt(0)').each(function() {
-            id++;
-            $(this).prepend('<td>' + id + '</td>')
-        });
-    });
-
-
+    
     // Paginador JQuery + AJAX
     $(function() {
         var page = 0, pagelimit = 10, totalelements = 0;
